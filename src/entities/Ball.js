@@ -1,10 +1,11 @@
 export class Ball {
-  constructor (x, y, r, dx, dy){
+  constructor (x, y, r, dx, dy, color){
     this.x = x
     this.y = y
     this.radius = r
     this.dx = dx
     this.dy = dy
+    this.color = color
   }
   
   changeDirectionRandom(){

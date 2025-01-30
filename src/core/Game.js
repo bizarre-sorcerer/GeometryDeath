@@ -24,7 +24,7 @@ export class Game {
     for (let i=0; i<Config.ballsAmount; i++){
       let x = Math.floor(Math.random() * (window.innerWidth - (Config.radius*2) + 1) + Config.radius)
       let y = Math.floor(Math.random() * (window.innerHeight - (Config.radius*2) + 1) + Config.radius)
-      let ball = new Ball(x, y, Config.radius, Config.dx, Config.dy)
+      let ball = new Ball(x, y, Config.radius, Config.dx, Config.dy, Config.colors[0])
       ball.changeDirectionRandom()
       this.balls.push(ball) 
     }
@@ -33,6 +33,7 @@ export class Game {
   renderFrame() {
     this.renderer.clearScreen();
     this.renderer.renderBalls(this.balls);
+    this.physics.moveBalls(this.balls)
   }
 
   gameLoop = () => {
