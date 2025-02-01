@@ -1,5 +1,5 @@
 import { Config } from "../config.js"
-import { Util } from "../Util.js"
+import { Util } from "../util.js"
 
 export class Ball {
   constructor (x, y, r, dx, dy, color){

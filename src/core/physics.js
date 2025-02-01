@@ -1,84 +1,90 @@
 import { Config } from "../config.js"
-import { Util } from "../Util.js"
+import { Util } from "../util.js"
 
 export class Physics{
   
-  moveBalls(balls){
-    for (let i=0; i<balls.length; i++){
-      this.moveBall(balls[i]);
-      this.detectWallCollision(balls[i])  
-      this.detectBallsCollision(balls[i], balls);
-    }
-  }
-
   moveBall(ball){
     ball.x += ball.dx
     ball.y += ball.dy
   }
 
-  detectWallCollision(ball){
-    let rightEdgePos = ball.x + ball.radius
-    let bottomEdgePos = ball.y + ball.radius
-
-    if (rightEdgePos > window.innerWidth || ball.x < ball.radius){
-      ball.dx *= -1
-      if (ball.x < ball.radius){
-        ball.x = ball.radius
-      } else if (rightEdgePos > window.innerWidth){
-        ball.x = window.innerWidth - ball.radius
-      } 
-
-      this.changeColor(ball)
-    } 
-    if (bottomEdgePos > window.innerHeight || ball.y < ball.radius){
-      ball.dy *= -1
-
-      if (ball.y < ball.radius){
-        ball.y = ball.radius
-      } else if (bottomEdgePos > window.innerHeight){
-        ball.y = window.innerHeight - ball.radius
-      }
-
-      this.changeColor(ball) 
+  processBallMovements(balls){
+    for (let i=0; i<balls.length; i++){
+      this.moveBall(balls[i]);
+      this.collisonDetection(balls[i], balls)
     }
   }
 
-  detectBallsCollision(ball, balls){
+  checkIfBallsOverlap(ball, otherBall, distance, distanceX, distanceY){
+    let overlap = ball.radius + otherBall.radius - distance;
+    let pushX = (distanceX / distance) * overlap * 0.8;
+    let pushY = (distanceY / distance) * overlap * 0.8;
+
+    ball.x += pushX;
+    ball.y += pushY;
+    otherBall.x -= pushX;
+    otherBall.y -= pushY;
+  }
+
+  detectWallCollisions(ball){
+    let rightEdgePos = ball.x + ball.radius
+    let bottomEdgePos = ball.y + ball.radius
+
+    if (ball.x < ball.radius){
+      ball.x = ball.radius
+      ball.dx *= -1
+      this.changeColor(ball)
+    } else if (rightEdgePos > window.innerWidth){
+      ball.x = window.innerWidth - ball.radius
+      ball.dx *= -1
+      this.changeColor(ball)
+    } 
+
+    if (ball.y < ball.radius){
+      ball.y = ball.radius
+      ball.dy *= -1
+      this.changeColor(ball) 
+    } else if (bottomEdgePos > window.innerHeight){
+      ball.y = window.innerHeight - ball.radius
+      ball.dy *= -1
+      this.changeColor(ball)     
+    }
+  }
+
+  detectBallCollisions(ball, balls){
     if (typeof(balls) == 'undefined'){
       return
     }
-    
+
     for (let otherBall of balls){
       if (ball.isEqual(otherBall)){
         continue
       } 
-
+      
       let distanceX = ball.x - otherBall.x 
       let distanceY = ball.y - otherBall.y 
       
       let distance = Math.sqrt(distanceX*distanceX + distanceY*distanceY)
       const colliding = distance < ball.radius + otherBall.radius;
+      
       if (colliding){
-        let overlap = ball.radius + otherBall.radius - distance;
-        let pushX = (distanceX / distance) * overlap * 0.5;
-        let pushY = (distanceY / distance) * overlap * 0.5;
-
-        ball.x += pushX;
-        ball.y += pushY;
-        otherBall.x -= pushX;
-        otherBall.y -= pushY;
+        this.checkIfBallsOverlap(ball, otherBall, distance, distanceX, distanceY)
 
         ball.dx *= -1
         ball.dy *= -1
         otherBall.dx *= -1 
         otherBall.dy *= -1
-        
+
         this.changeColor(ball)
         this.changeColor(otherBall)
       }
     }
   }
 
+  collisonDetection(ball, balls){
+    this.detectWallCollisions(ball)  
+    this.detectBallCollisions(ball, balls);
+  }
 
   changeColor(ball){
     let randomIndex = Util.getRandomInt(0, Config.colors.length)

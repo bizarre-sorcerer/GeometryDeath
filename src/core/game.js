@@ -1,8 +1,8 @@
-import { Renderer } from "./Renderer.js";
-import { Physics } from "./Physics.js";
-import { Ball } from "../entities/Ball.js";
+import { Renderer } from "./renderer.js";
+import { Physics } from "./physics.js";
+import { Ball } from "../entities/ball.js";
 import { Config } from "../config.js";
-import { Util } from "../Util.js";
+import { Util } from "../util.js";
 
 export class Game {
   constructor(canvasElement) {
@@ -38,8 +38,7 @@ export class Game {
   renderFrame() {
     this.renderer.clearScreen();
     this.renderer.renderBalls(this.balls);
-    this.physics.moveBalls(this.balls)
-    this.physics.detectBallsCollision(this.balls)
+    this.physics.processBallMovements(this.balls)
   }
 
   gameLoop = () => {
