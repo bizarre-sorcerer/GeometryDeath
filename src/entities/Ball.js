@@ -1,3 +1,6 @@
+import { Config } from "../config.js"
+import { Util } from "../Util.js"
+
 export class Ball {
   constructor (x, y, r, dx, dy, color){
     this.x = x
@@ -20,6 +23,19 @@ export class Ball {
       this.dy = 4
     } else {
       this.dy = -4
+    }
+  }
+
+  setRandomColor(){
+    let randomIndex = Util.getRandomInt(0, Config.colors.length)
+    this.color = Config.colors[randomIndex]
+  }
+
+  isEqual(ball){
+    if (this == ball){
+      return true
+    } else {
+      return false
     }
   }
 }

@@ -2,6 +2,7 @@ import { Renderer } from "./Renderer.js";
 import { Physics } from "./Physics.js";
 import { Ball } from "../entities/Ball.js";
 import { Config } from "../config.js";
+import { Util } from "../Util.js";
 
 export class Game {
   constructor(canvasElement) {
@@ -21,19 +22,24 @@ export class Game {
   }
 
   createballs(){
+    let max = (Config.radius*2)
+
     for (let i=0; i<Config.ballsAmount; i++){
-      let x = Math.floor(Math.random() * (window.innerWidth - (Config.radius*2) + 1) + Config.radius)
-      let y = Math.floor(Math.random() * (window.innerHeight - (Config.radius*2) + 1) + Config.radius)
+      let x = Util.getRandomInt(max, window.innerWidth)
+      let y = Util.getRandomInt(max, window.innerHeight)
       let ball = new Ball(x, y, Config.radius, Config.dx, Config.dy, Config.colors[0])
+      
       ball.changeDirectionRandom()
+      ball.setRandomColor()
       this.balls.push(ball) 
-    }
+    } 
   }
 
   renderFrame() {
     this.renderer.clearScreen();
     this.renderer.renderBalls(this.balls);
     this.physics.moveBalls(this.balls)
+    this.physics.detectBallsCollision(this.balls)
   }
 
   gameLoop = () => {
