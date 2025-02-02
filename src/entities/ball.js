@@ -1,14 +1,12 @@
-import { Config } from "../config.js"
-import { Util } from "../util.js"
+import { GameObject } from "./game-object.js"
+import { Config } from "../utils/config.js"
+import { Util } from "../utils/util.js"
 
-export class Ball {
-  constructor (x, y, r, dx, dy, color){
-    this.x = x
-    this.y = y
+export class Ball extends GameObject{
+  constructor (x, y, r, dx=Config.dx, dy=Config.dy,
+              thickness="2", color="#ffffff"){
+    super(x, y, dx, dy, thickness, color)
     this.radius = r
-    this.dx = dx
-    this.dy = dy
-    this.color = color
   }
   
   changeDirectionRandom(){
@@ -43,8 +41,8 @@ export class Ball {
     this.color = Config.colors[randomIndex]
   }
 
-  isEqual(ball){
-    if (this == ball){
+  isEqual(otherBall){
+    if (this == otherBall){
       return true
     } else {
       return false

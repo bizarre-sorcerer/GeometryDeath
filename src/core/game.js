@@ -1,8 +1,7 @@
 import { Renderer } from "./renderer.js";
 import { Physics } from "./physics.js";
-import { Ball } from "../entities/ball.js";
-import { Config } from "../config.js";
-import { Util } from "../util.js";
+import { Player } from "../entities/player.js"
+import { Ball } from "../entities/ball.js"
 
 export class Game {
   constructor(canvasElement) {
@@ -10,7 +9,6 @@ export class Game {
     this.ctx = this.canvas.getContext("2d");
     this.renderer = new Renderer(this.ctx);
     this.physics = new Physics();
-    this.balls = [];
 
     this.init()
   }
@@ -18,27 +16,13 @@ export class Game {
   init() {
     this.canvas.width = window.innerWidth
     this.canvas.height = window.innerHeight
-    this.createballs()
-  }
-
-  createballs(){
-    let max = (Config.radius*2)
-
-    for (let i=0; i<Config.ballsAmount; i++){
-      let x = Util.getRandomInt(max, window.innerWidth)
-      let y = Util.getRandomInt(max, window.innerHeight)
-      let ball = new Ball(x, y, Config.radius, Config.dx, Config.dy, Config.colors[0])
-      
-      ball.changeDirectionRandom()
-      ball.setRandomColor()
-      this.balls.push(ball) 
-    } 
+    this.player = new Player(20, 20)
+    this.ball = new Ball(200, 200, 50)
   }
 
   renderFrame() {
-    this.renderer.clearScreen();
-    this.renderer.renderBalls(this.balls);
-    this.physics.processBallMovements(this.balls)
+    this.renderer.drawGameObject(this.player)
+    this.renderer.drawGameObject(this.ball)
   }
 
   gameLoop = () => {

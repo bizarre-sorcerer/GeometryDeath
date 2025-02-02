@@ -1,6 +1,3 @@
-import { Config } from "../config.js"
-import { Util } from "../util.js"
-
 export class Physics{
   
   moveBall(ball){
