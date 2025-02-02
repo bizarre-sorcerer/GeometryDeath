@@ -14,7 +14,7 @@ export class Physics{
       this.collisonDetection(balls[i], balls)
     }
   }
-
+ 
   checkIfBallsOverlap(ball, otherBall, distance, distanceX, distanceY){
     let overlap = ball.radius + otherBall.radius - distance;
     let pushX = (distanceX / distance) * overlap * 0.8;
@@ -33,21 +33,21 @@ export class Physics{
     if (ball.x < ball.radius){
       ball.x = ball.radius
       ball.dx *= -1
-      this.changeColor(ball)
+      ball.changeColor()
     } else if (rightEdgePos > window.innerWidth){
       ball.x = window.innerWidth - ball.radius
       ball.dx *= -1
-      this.changeColor(ball)
+      ball.changeColor()
     } 
 
     if (ball.y < ball.radius){
       ball.y = ball.radius
       ball.dy *= -1
-      this.changeColor(ball) 
+      ball.changeColor()
     } else if (bottomEdgePos > window.innerHeight){
       ball.y = window.innerHeight - ball.radius
       ball.dy *= -1
-      this.changeColor(ball)     
+      ball.changeColor()
     }
   }
 
@@ -75,8 +75,8 @@ export class Physics{
         otherBall.dx *= -1 
         otherBall.dy *= -1
 
-        this.changeColor(ball)
-        this.changeColor(otherBall)
+        ball.changeColor()
+        ball.changeColor()
       }
     }
   }
@@ -84,17 +84,5 @@ export class Physics{
   collisonDetection(ball, balls){
     this.detectWallCollisions(ball)  
     this.detectBallCollisions(ball, balls);
-  }
-
-  changeColor(ball){
-    let randomIndex = Util.getRandomInt(0, Config.colors.length)
-    let currentColor = Config.colors.indexOf(ball.color)
-    let nextColor = Config.colors[randomIndex]
-
-    do {
-      randomIndex = Util.getRandomInt(0, Config.colors.length)
-    } while (currentColor === nextColor)
-
-    ball.color = Config.colors[randomIndex]
   }
 }

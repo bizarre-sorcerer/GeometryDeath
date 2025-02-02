@@ -31,6 +31,18 @@ export class Ball {
     this.color = Config.colors[randomIndex]
   }
 
+  changeColor(){
+    let randomIndex = Util.getRandomInt(0, Config.colors.length)
+    let currentColor = Config.colors.indexOf(this.color)
+    let nextColor = Config.colors[randomIndex]
+
+    do {
+      randomIndex = Util.getRandomInt(0, Config.colors.length)
+    } while (currentColor === nextColor)
+
+    this.color = Config.colors[randomIndex]
+  }
+
   isEqual(ball){
     if (this == ball){
       return true
