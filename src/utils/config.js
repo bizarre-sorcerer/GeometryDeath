@@ -5,7 +5,9 @@ export class Config {
   static dx = 3;
   static dy = 3;
   static speed = 3;
-  static ballsAmount = 50;
+  static ballsAmount = 2;
+  static maxBalls = (window.innerWidth + innerHeight) / this.radius / 2;
+  static font = "50px Arial";
   static colors = [
     "#ffffff",
     "#E54B4B",

@@ -39,14 +39,35 @@ export class Game {
   init() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.ctx.font = Config.font;
+
     this.createballs();
+
+    this.elapsed = 0;
+    this.lastTime = performance.now();
+
+    console.log(Config.maxBalls);
   }
 
-  gameLoop = () => {
-    requestAnimationFrame(this.gameLoop);
+  gameLoop = (currentTime) => {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.strokeText(
+      Math.floor(currentTime / 100),
+      this.canvas.width / 2 - 19,
+      60
+    );
 
-    this.ctx.clearRect(0, 0, this.canvas.width, canvas.height);
+    if (currentTime - this.lastTime >= 2000) {
+      if (this.balls.length < Config.maxBalls) {
+        this.createballs();
+      }
+      this.elapsed = 0;
+      this.lastTime = currentTime;
+    }
+
     this.renderer.renderFrame(this.balls);
     this.physics.processBallMovements(this.balls);
+
+    requestAnimationFrame(this.gameLoop);
   };
 }
