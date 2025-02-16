@@ -12,7 +12,7 @@ export class Renderer {
     this.ctx.strokeStyle = gameObject.color;
     this.ctx.lineWidth = gameObject.thickness;
 
-    if (gameObject instanceof Ball) {
+    if (gameObject instanceof Ball || gameObject instanceof Player) {
       this.ctx.arc(
         gameObject.x,
         gameObject.y,

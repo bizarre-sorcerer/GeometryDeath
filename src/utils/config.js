@@ -1,6 +1,5 @@
 export class Config {
-  static playerWidth = 50;
-  static playerHeight = 50;
+  static playerSize = 10;
   static radius = 20;
   static dx = 3;
   static dy = 3;
