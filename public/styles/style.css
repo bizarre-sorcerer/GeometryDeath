@@ -1,10 +1,62 @@
-body{
+@import url("https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
   margin: 0;
   overflow: hidden;
+  background-color: rgba(5, 5, 5, 0.9);
+  height: 80vh;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-canvas{
-  background-color: rgba(5, 5, 5, .9);
-  width: 100vw;
-  height: 100vh;
+h1,
+h3 {
+  text-align: center;
+}
+
+h1 {
+  font-family: "Protest Revolution";
+  font-size: 52px;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-family: "Roboto";
+  font-size: 16px;
+  margin-bottom: 50px;
+}
+
+input {
+  background: transparent;
+  color: white;
+  border: solid 2px rgba(112, 193, 179, 0.75);
+  border-radius: 5px;
+  height: 40px;
+  width: 300px;
+  padding: 0 10px;
+  font-size: 14px;
+}
+
+::placeholder {
+  color: rgba(229, 75, 75, 0.75);
+  font-size: 14px;
+}
+
+input:focus::placeholder {
+  color: #e54b4b;
+  opacity: 1;
+}
+
+input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: solid 2px #70c1b3 !important;
+  border-radius: 5px;
+}
+
+canvas {
+  display: none;
 }

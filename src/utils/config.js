@@ -5,7 +5,10 @@ export class Config {
   static dy = 3;
   static speed = 3;
   static ballsAmount = 2;
-  static maxBalls = (window.innerWidth + innerHeight) / this.radius / 2;
+  static maxBalls = Math.floor(
+    (0.6 * canvas.width * canvas.height) / (Math.PI * Math.pow(this.radius, 2))
+  );
+
   static font = "50px Arial";
   static colors = [
     "#ffffff",
