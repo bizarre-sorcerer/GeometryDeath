@@ -54,15 +54,18 @@ export class Game {
 
     this.createballs();
 
+    this.startTime = performance.now();
     this.lastTime = performance.now();
   }
 
   gameLoop = (currentTime) => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    const elapsedTime = currentTime - this.startTime;
     this.gameOngoing = this.physics.ongoing;
+
     if (this.gameOngoing) {
-      this.points = Math.floor(currentTime / 100);
+      this.points = Math.floor(elapsedTime / 100);
       this.ctx.strokeText(this.points, this.canvas.width / 2 - 19, 60);
 
       if (currentTime - this.lastTime >= 2000) {
