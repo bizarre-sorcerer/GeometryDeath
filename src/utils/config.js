@@ -1,12 +1,12 @@
 export class Config {
   static playerSize = 10;
   static radius = 20;
-  static dx = 3;
-  static dy = 3;
-  static speed = 3;
+  static dx = 20;
+  static dy = 20;
+  static speed = 6;
   static ballsAmount = 2;
   static maxBalls = Math.floor(
-    (0.6 * canvas.width * canvas.height) / (Math.PI * Math.pow(this.radius, 2))
+    (0.9 * canvas.width * canvas.height) / (Math.PI * Math.pow(this.radius, 2))
   );
 
   static font = "50px Arial";
