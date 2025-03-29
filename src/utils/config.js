@@ -2,7 +2,7 @@ export class Config {
   static playerSize = 10;
   static radius = 20;
   static dx = 20;
-  static dy = 20;
+  static dy = 0;
   static speed = 6;
   static ballsAmount = 2;
   static maxBalls = Math.floor(

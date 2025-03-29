@@ -38,6 +38,20 @@ export class Renderer {
     }
   }
 
+  renderPoints(points) {
+    this.ctx.strokeText(points, window.innerWidth / 2 - 19, 60);
+  }
+
+  renderLoseMessage(points) {
+    this.ctx.strokeText(
+      `LOL, only ${points} points?`,
+      window.innerWidth / 2 - 19,
+      window.innerHeight / 2
+    );
+    this.ctx.textBaseline = "middle";
+    this.ctx.textAlign = "center";
+  }
+
   clearScreen() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }

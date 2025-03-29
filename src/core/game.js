@@ -1,7 +1,6 @@
 import { Renderer } from "./renderer.js";
 import { Physics } from "./physics.js";
 import { Config } from "../utils/config.js";
-import { Ball } from "../entities/ball.js";
 import { Util } from "../utils/util.js";
 import { Player } from "../entities/player.js";
 
@@ -12,29 +11,9 @@ export class Game {
     this.renderer = new Renderer(this.ctx);
     this.physics = new Physics(true);
     this.gameOngoing = true;
+    this.points = 0;
 
     this.init();
-  }
-
-  createballs() {
-    let max = Config.radius * 2;
-
-    for (let i = 0; i < Config.ballsAmount; i++) {
-      let x = Util.getRandomInt(max, window.innerWidth);
-      let y = Util.getRandomInt(max, window.innerHeight);
-      let ball = new Ball(
-        x,
-        y,
-        Config.radius,
-        Config.dx,
-        Config.dy,
-        Config.colors[0]
-      );
-
-      ball.changeDirectionRandom();
-      ball.setRandomColor();
-      this.gameObjects.push(ball);
-    }
   }
 
   init() {
@@ -52,38 +31,36 @@ export class Game {
       self.physics.movePlayer(self.player, event.clientX, event.clientY);
     });
 
-    this.createballs();
+    let starterBalls = Util.createballs();
+    starterBalls.forEach((ball) => this.gameObjects.push(ball));
 
-    this.startTime = performance.now();
-    this.lastTime = performance.now();
+    this.timeSinceGameInit = performance.now();
+    this.lastTimeBallsWereAdded = performance.now();
   }
 
-  gameLoop = (currentTime) => {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  calculateAndRenderPoints() {
+    this.points += 1;
+    this.renderer.renderPoints(this.points);
+  }
 
-    const elapsedTime = currentTime - this.startTime;
-    this.gameOngoing = this.physics.ongoing;
-
-    if (this.gameOngoing) {
-      this.points = Math.floor(elapsedTime / 100);
-      this.ctx.strokeText(this.points, this.canvas.width / 2 - 19, 60);
-
-      if (currentTime - this.lastTime >= 2000) {
-        if (this.gameObjects.length < Config.maxBalls) {
-          this.createballs();
-        }
-        this.lastTime = currentTime;
+  createNewBallsPeriodically() {
+    if (currentTime - this.lastTime >= 2000) {
+      if (this.gameObjects.length < Config.maxBalls) {
+        this.createballs();
       }
+      this.lastTimeBallsWereAdded = performance.now();
+    }
+  }
+
+  gameLoop = () => {
+    this.renderer.clearScreen();
+
+    if (this.physics.ongoing) {
+      this.calculateAndRenderPoints();
       this.renderer.renderFrame(this.gameObjects);
-      this.physics.processBallMovements(this.gameObjects);
+      this.physics.processBallPhysics(this.gameObjects);
     } else {
-      this.ctx.strokeText(
-        `LOL, only ${this.points} points?`,
-        this.canvas.width / 2 - 19,
-        this.canvas.height / 2
-      );
-      this.ctx.textBaseline = "middle";
-      this.ctx.textAlign = "center";
+      this.renderer.renderLoseMessage(this.points);
     }
 
     requestAnimationFrame(this.gameLoop);
