@@ -1,4 +1,5 @@
 import { Game } from "./core/game.js";
+import { GameUtils } from "./utils/game-utils.js";
 
 const body = document.querySelector("body");
 const canvas = document.querySelector("#canvas");
@@ -11,14 +12,14 @@ input.addEventListener("keydown", (event) => {
     body.style.display = "block";
     canvas.style.display = "block";
     introContainer.style.display = "none";
-
-    let game = new Game(canvas);
-    game.startGame();
-
-    document.addEventListener("click", () => {
-      game = null;
-      const newGame = new Game(canvas);
-      newGame.startGame();
-    });
   }
+});
+
+document.addEventListener("click", () => {
+  GameUtils.gameObjects = [];
+  GameUtils.points = 0;
+  GameUtils.gameOngoing = true;
+
+  const game = new Game(canvas);
+  game.startGame();
 });
