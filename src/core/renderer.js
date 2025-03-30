@@ -1,6 +1,7 @@
 import { Ball } from "../entities/ball.js";
 import { Player } from "../entities/player.js";
 import { Rect } from "../entities/rect.js";
+import { GameUtils } from "../utils/game-utils.js";
 
 export class Renderer {
   constructor(ctx) {
@@ -42,9 +43,9 @@ export class Renderer {
     this.ctx.strokeText(points, window.innerWidth / 2 - 19, 60);
   }
 
-  renderLoseMessage(points) {
+  renderLoseMessage() {
     this.ctx.strokeText(
-      `LOL, only ${points} points?`,
+      `LOL, only ${GameUtils.points} points?`,
       window.innerWidth / 2 - 19,
       window.innerHeight / 2
     );

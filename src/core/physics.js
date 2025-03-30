@@ -1,12 +1,9 @@
 import { Config } from "../utils/config.js";
 import { Ball } from "../entities/ball.js";
 import { Player } from "../entities/player.js";
+import { GameUtils } from "../utils/game-utils.js";
 
 export class Physics {
-  constructor(ongoing) {
-    this.ongoing = ongoing;
-  }
-
   movePlayer(player, x, y) {
     player.x = x;
     player.y = y;
@@ -47,17 +44,6 @@ export class Physics {
     if (ball instanceof Ball && changeColor) {
       ball.changeColor();
     }
-  }
-
-  checkIfBallsOverlap(ball, otherBall, distance, distanceX, distanceY) {
-    let overlap = ball.radius + otherBall.radius - distance;
-    let pushX = (distanceX / distance) * overlap * 0.8;
-    let pushY = (distanceY / distance) * overlap * 0.8;
-
-    ball.x += pushX;
-    ball.y += pushY;
-    otherBall.x -= pushX;
-    otherBall.y -= pushY;
   }
 
   calculateDistance(xDistance, yDistance) {
@@ -131,7 +117,6 @@ export class Physics {
   processBallPhysics(balls) {
     for (let ball of balls) {
       this.moveBall(ball);
-
       this.detectWallCollisions(ball);
 
       if (!balls) return;
@@ -141,11 +126,10 @@ export class Physics {
 
         if (this.checkBallsCollision(ball, otherBall)) {
           if (ball instanceof Player || otherBall instanceof Player) {
-            this.ongoing = false;
+            GameUtils.gameOngoing = false;
           }
 
           this.correctIfBallsOverlap(ball, otherBall);
-
           this.calculateNewBallSpeeds(ball, otherBall);
 
           if (ball instanceof Ball) {
