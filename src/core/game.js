@@ -16,13 +16,12 @@ export class Game {
     this.init();
   }
 
-  init() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-    this.gameObjects = [];
-    this.points = 0;
-    this.ctx.font = Config.font;
+  addNewBalls() {
+    let starterBalls = Util.createballs();
+    starterBalls.forEach((ball) => this.gameObjects.push(ball));
+  }
 
+  createPlayer() {
     this.player = new Player(10, 10);
     this.gameObjects.push(this.player);
 
@@ -30,12 +29,20 @@ export class Game {
     this.canvas.addEventListener("mousemove", function (event) {
       self.physics.movePlayer(self.player, event.clientX, event.clientY);
     });
+  }
 
-    let starterBalls = Util.createballs();
-    starterBalls.forEach((ball) => this.gameObjects.push(ball));
+  init() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.gameObjects = [];
+    this.points = 0;
+    this.ctx.font = Config.font;
 
-    this.timeSinceGameInit = performance.now();
-    this.lastTimeBallsWereAdded = performance.now();
+    this.createPlayer();
+    this.addNewBalls();
+
+    this.gameInitTimeStamp = performance.now();
+    this.timeSinceBallsWereAdded = performance.now();
   }
 
   calculateAndRenderPoints() {
@@ -44,11 +51,11 @@ export class Game {
   }
 
   createNewBallsPeriodically() {
-    if (currentTime - this.lastTime >= 2000) {
+    if (performance.now() - this.timeSinceBallsWereAdded >= 2000) {
       if (this.gameObjects.length < Config.maxBalls) {
-        this.createballs();
+        this.addNewBalls();
       }
-      this.lastTimeBallsWereAdded = performance.now();
+      this.timeSinceBallsWereAdded = performance.now();
     }
   }
 
@@ -59,6 +66,7 @@ export class Game {
       this.calculateAndRenderPoints();
       this.renderer.renderFrame(this.gameObjects);
       this.physics.processBallPhysics(this.gameObjects);
+      this.createNewBallsPeriodically();
     } else {
       this.renderer.renderLoseMessage(this.points);
     }
