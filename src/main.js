@@ -12,14 +12,14 @@ input.addEventListener("keydown", (event) => {
     body.style.display = "block";
     canvas.style.display = "block";
     introContainer.style.display = "none";
+
+    const game = new Game(canvas);
+    game.startGame();
+
+    document.addEventListener("click", () => {
+      if (!GameUtils.gameOngoing) {
+        game.restartGame();
+      }
+    });
   }
-});
-
-document.addEventListener("click", () => {
-  GameUtils.gameObjects = [];
-  GameUtils.points = 0;
-  GameUtils.gameOngoing = true;
-
-  const game = new Game(canvas);
-  game.startGame();
 });

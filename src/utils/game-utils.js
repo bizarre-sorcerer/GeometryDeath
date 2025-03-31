@@ -1,8 +1,6 @@
 import { Config } from "./config.js";
 import { Ball } from "../entities/ball.js";
 import { Player } from "../entities/player.js";
-import { Physics } from "../core/physics.js";
-import { Renderer } from "../core/renderer.js";
 
 export class GameUtils {
   static gameObjects = [];
@@ -54,7 +52,7 @@ export class GameUtils {
   }
 
   static handlePoints(renderer) {
-    GameUtils.points += 1;
+    GameUtils.points += 0.3;
     renderer.renderPoints(GameUtils.points);
   }
 
