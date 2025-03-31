@@ -1,6 +1,5 @@
 import { Renderer } from "./renderer.js";
 import { Physics } from "./physics.js";
-import { Config } from "../utils/config.js";
 import { GameUtils } from "../utils/game-utils.js";
 
 export class Game {
@@ -9,6 +8,7 @@ export class Game {
     this.ctx = this.canvas.getContext("2d");
     this.renderer = new Renderer(this.ctx);
     this.physics = new Physics();
+    this.frameCount = 0;
 
     this.init();
   }
@@ -33,9 +33,19 @@ export class Game {
     }
 
     requestAnimationFrame(this.gameLoop);
+
+    this.frameCount += 1;
   };
 
   startGame() {
     this.gameLoop();
+  }
+
+  restartGame() {
+    console.log("restarting game");
+    GameUtils.gameObjects = [];
+    GameUtils.points = 0;
+    GameUtils.gameOngoing = true;
+    GameUtils.createPlayer(this.canvas, this.physics);
   }
 }

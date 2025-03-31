@@ -40,12 +40,13 @@ export class Renderer {
   }
 
   renderPoints(points) {
-    this.ctx.strokeText(points, window.innerWidth / 2 - 19, 60);
+    this.ctx.strokeText(Math.ceil(points), window.innerWidth / 2 - 19, 60);
   }
 
   renderLoseMessage() {
+    let points = Math.ceil(GameUtils.points);
     this.ctx.strokeText(
-      `LOL, only ${GameUtils.points} points?`,
+      `LOL, only ${points} points?`,
       window.innerWidth / 2 - 19,
       window.innerHeight / 2
     );
