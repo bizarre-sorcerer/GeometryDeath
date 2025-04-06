@@ -9,6 +9,14 @@ export class Physics {
   static yDistance = 0;
 
   movePlayer(player, x, y) {
+    if (
+      x <= player.radius ||
+      x >= window.innerWidth - player.radius ||
+      y <= player.radius ||
+      y >= window.innerHeight - player.radius
+    ) {
+      return;
+    }
     player.x = x;
     player.y = y;
   }
