@@ -8,10 +8,12 @@ export class Player extends GameObject {
     radius = Config.playerSize,
     dx = Config.dx,
     dy = Config.dy,
-    color = "#ffffff"
+    color = "#ffffff",
+    amountOfLives = 1
   ) {
-    super(x, y, dx, dy, color);
+    super(x, y, dx, dy, color, amountOfLives);
     this.radius = radius;
+    this.amountOfLives = amountOfLives;
   }
 
   isEqual(otherObject) {

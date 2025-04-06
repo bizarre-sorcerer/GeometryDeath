@@ -8,7 +8,6 @@ export class Game {
     this.ctx = this.canvas.getContext("2d");
     this.renderer = new Renderer(this.ctx);
     this.physics = new Physics();
-    this.frameCount = 0;
 
     this.init();
   }
@@ -18,23 +17,24 @@ export class Game {
     GameUtils.createPlayer(this.canvas, this.physics);
     GameUtils.createMoreBalls();
     GameUtils.keepTrackOfTime();
+    GameUtils.createLifeObjectsPeriodically();
   }
 
   gameLoop = () => {
+    GameUtils.frame += 1;
+
     this.renderer.clearScreen();
 
     if (GameUtils.gameOngoing) {
       GameUtils.handlePoints(this.renderer);
       GameUtils.createNewBallsPeriodically();
-      this.renderer.renderFrame(GameUtils.gameObjects);
-      this.physics.processBallPhysics(GameUtils.gameObjects);
+      this.renderer.renderFrame(GameUtils.allGameObjects);
+      this.physics.processPhysics(GameUtils.allGameObjects);
     } else {
       this.renderer.renderLoseMessage();
     }
 
     requestAnimationFrame(this.gameLoop);
-
-    this.frameCount += 1;
   };
 
   startGame() {
@@ -42,10 +42,12 @@ export class Game {
   }
 
   restartGame() {
-    console.log("restarting game");
-    GameUtils.gameObjects = [];
+    GameUtils.allGameObjects = [];
+    GameUtils.lifeObjects = [];
     GameUtils.points = 0;
     GameUtils.gameOngoing = true;
-    GameUtils.createPlayer(this.canvas, this.physics);
+    clearInterval(GameUtils.lifeObjectsInterval);
+
+    this.init();
   }
 }

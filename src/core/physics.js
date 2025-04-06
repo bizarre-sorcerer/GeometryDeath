@@ -2,8 +2,12 @@ import { Config } from "../utils/config.js";
 import { Ball } from "../entities/ball.js";
 import { Player } from "../entities/player.js";
 import { GameUtils } from "../utils/game-utils.js";
+import { LifeObject } from "../entities/life-object.js";
 
 export class Physics {
+  static xDistance = 0;
+  static yDistance = 0;
+
   movePlayer(player, x, y) {
     player.x = x;
     player.y = y;
@@ -46,27 +50,31 @@ export class Physics {
     }
   }
 
-  calculateDistance(xDistance, yDistance) {
+  calculateDistance(gameObject, otherGameObject) {
+    const xDistance = otherGameObject.x - gameObject.x;
+    const yDistance = otherGameObject.y - gameObject.y;
+
+    Physics.xDistance = xDistance;
+    Physics.yDistance = yDistance;
+
     const distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
     return distance;
   }
 
-  checkBallsCollision(ball, otherBall) {
-    const xDistance = otherBall.x - ball.x;
-    const yDistance = otherBall.y - ball.y;
-    let distance = this.calculateDistance(xDistance, yDistance);
+  areObjectsColliding(gameObject, otherGameObject) {
+    if (gameObject.isEqual(otherGameObject)) return;
 
-    return distance < ball.radius + otherBall.radius;
+    let distance = this.calculateDistance(gameObject, otherGameObject);
+
+    return distance < gameObject.radius + otherGameObject.radius;
   }
 
   correctIfBallsOverlap(ball, otherBall) {
-    const xDistance = otherBall.x - ball.x;
-    const yDistance = otherBall.y - ball.y;
-    let distance = this.calculateDistance(xDistance, yDistance);
+    let distance = this.calculateDistance(ball, otherBall);
 
     const overlap = ball.radius + otherBall.radius - distance;
-    const correctionX = (overlap / 2) * (xDistance / distance);
-    const correctionY = (overlap / 2) * (yDistance / distance);
+    const correctionX = (overlap / 2) * (Physics.xDistance / distance);
+    const correctionY = (overlap / 2) * (Physics.yDistance / distance);
     ball.x -= correctionX;
     ball.y -= correctionY;
     otherBall.x += correctionX;
@@ -74,12 +82,10 @@ export class Physics {
   }
 
   calculateNewBallSpeeds(ball, otherBall) {
-    const xDistance = otherBall.x - ball.x;
-    const yDistance = otherBall.y - ball.y;
-    let distance = this.calculateDistance(xDistance, yDistance);
+    let distance = this.calculateDistance(ball, otherBall);
 
-    const normalVectorX = xDistance / distance;
-    const normalVectorY = yDistance / distance;
+    const normalVectorX = Physics.xDistance / distance;
+    const normalVectorY = Physics.yDistance / distance;
     const tangentVectorX = -normalVectorY;
     const tangentVectorY = normalVectorX;
 
@@ -114,28 +120,67 @@ export class Physics {
     otherBall.dy = finalVy2;
   }
 
-  processBallPhysics(balls) {
-    for (let ball of balls) {
-      this.moveBall(ball);
-      this.detectWallCollisions(ball);
+  processBallCollision(ball, otherBall) {
+    this.correctIfBallsOverlap(ball, otherBall);
+    this.calculateNewBallSpeeds(ball, otherBall);
+    ball.changeColor();
+  }
 
-      if (!balls) return;
+  handleBallPhysics(ball, balls) {
+    this.moveBall(ball);
+    this.detectWallCollisions(ball);
 
-      for (let otherBall of balls) {
-        if (ball.isEqual(otherBall)) continue;
-
-        if (this.checkBallsCollision(ball, otherBall)) {
-          if (ball instanceof Player || otherBall instanceof Player) {
-            GameUtils.gameOngoing = false;
-          }
-
-          this.correctIfBallsOverlap(ball, otherBall);
-          this.calculateNewBallSpeeds(ball, otherBall);
-
-          if (ball instanceof Ball) {
-            ball.changeColor();
-          }
+    for (let otherBall of balls) {
+      if (otherBall instanceof Ball) {
+        if (this.areObjectsColliding(ball, otherBall)) {
+          this.processBallCollision(ball, otherBall);
         }
+      }
+    }
+  }
+
+  handlePlayerPhysics(player, gameObjects) {
+    for (let gameObject of gameObjects) {
+      if (this.areObjectsColliding(player, gameObject)) {
+        if (gameObject instanceof LifeObject) {
+          return;
+        }
+        if (player.amountOfLives <= 1) {
+          GameUtils.gameOngoing = false;
+        }
+
+        let index = GameUtils.allGameObjects.indexOf(gameObject);
+        GameUtils.allGameObjects.splice(index, 1);
+
+        player.amountOfLives -= 1;
+      }
+    }
+  }
+
+  handleLifeObjectPhysics(lifeObject, gameObjects) {
+    for (let gameObject of gameObjects) {
+      if (this.areObjectsColliding(lifeObject, gameObject)) {
+        if (gameObject instanceof Player) {
+          GameUtils.player.amountOfLives += 1;
+
+          let indexLifeObjects = GameUtils.lifeObjects.indexOf(lifeObject);
+          let indexGameObjects = GameUtils.allGameObjects.indexOf(lifeObject);
+
+          GameUtils.lifeObjects.splice(indexLifeObjects, 1);
+          GameUtils.allGameObjects.splice(indexGameObjects, 1);
+        }
+      }
+    }
+  }
+
+  processPhysics(gameObjects) {
+    for (let gameObject of gameObjects) {
+      if (gameObject instanceof Ball) {
+        this.handleBallPhysics(gameObject, gameObjects);
+      } else if (gameObject instanceof Player) {
+        this.handlePlayerPhysics(gameObject, gameObjects);
+      } else if (gameObject instanceof LifeObject) {
+        this.handleLifeObjectPhysics(gameObject, gameObjects);
       }
     }
   }
