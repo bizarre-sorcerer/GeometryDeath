@@ -68,3 +68,20 @@ input:focus {
 canvas {
   display: none;
 }
+
+#mobile-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+#mobile-container h1 {
+  color: #ff1b1b;
+}
+
+#mobile-error-message {
+  width: 80%;
+  text-align: center;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
