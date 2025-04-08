@@ -50,6 +50,7 @@ export class Renderer {
 
       this.drawGameObject(gameObject);
     }
+    this.renderPoints(GameUtils.points);
   }
 
   renderPoints(points) {

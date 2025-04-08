@@ -1,6 +1,7 @@
 import { Renderer } from "./renderer.js";
 import { Physics } from "./physics.js";
 import { GameUtils } from "../utils/game-utils.js";
+import { Config } from "../utils/config.js";
 
 export class Game {
   constructor(canvasElement) {
@@ -13,24 +14,30 @@ export class Game {
   }
 
   init() {
+    console.log(Config.maxBalls);
+
     GameUtils.setUpCanvas(this.canvas, this.ctx);
     GameUtils.createPlayer(this.canvas, this.physics);
     GameUtils.createMoreBalls();
     GameUtils.keepTrackOfTime();
     GameUtils.createLifeObjectsPeriodically();
+
+    let self = this;
+    this.physicsAndPointsInterval = setInterval(function () {
+      GameUtils.points += 0.35;
+      self.physics.processPhysics(GameUtils.allGameObjects);
+    }, 15);
   }
 
   gameLoop = () => {
-    GameUtils.frame += 1;
-
     this.renderer.clearScreen();
 
     if (GameUtils.gameOngoing) {
-      GameUtils.handlePoints(this.renderer);
       GameUtils.createNewBallsPeriodically();
       this.renderer.renderFrame(GameUtils.allGameObjects);
-      this.physics.processPhysics(GameUtils.allGameObjects);
     } else {
+      clearInterval(GameUtils.lifeObjectsInterval);
+      clearInterval(this.physicsAndPointsInterval);
       this.renderer.renderLoseMessage();
     }
 
@@ -46,7 +53,6 @@ export class Game {
     GameUtils.lifeObjects = [];
     GameUtils.points = 0;
     GameUtils.gameOngoing = true;
-    clearInterval(GameUtils.lifeObjectsInterval);
 
     this.init();
   }
