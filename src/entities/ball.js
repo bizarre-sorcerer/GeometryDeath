@@ -3,17 +3,11 @@ import { Config } from "../utils/config.js";
 import { GameUtils } from "../utils/game-utils.js";
 
 export class Ball extends GameObject {
-  constructor(
-    x,
-    y,
-    r,
-    dx = Config.dx,
-    dy = Config.dy,
-    thickness = "2",
-    color = "#ffffff"
-  ) {
-    super(x, y, dx, dy, thickness, color);
-    this.radius = r;
+  constructor({ x, y, radius, dx, dy, thickness, color }) {
+    super({ x, y, thickness, color });
+    this.dx = dx;
+    this.dy = dy;
+    this.radius = radius;
   }
 
   changeDirectionRandom() {

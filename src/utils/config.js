@@ -3,6 +3,7 @@ export class Config {
   static radius = 20;
   static dx = 20;
   static dy = 0;
+  static thickness = 2;
   static speed = 6;
   static ballsAmount = 1;
   static maxBalls = this.calculateBallsMaxAmount(0.07);
@@ -18,6 +19,8 @@ export class Config {
     "#44CF6C",
     "#54457F",
   ];
+  static playerColor = "#ffffff";
+  static defaultAmountOfLives = 1;
 
   static calculateBallsMaxAmount(coveragePercent) {
     let maxInRow = Math.floor(window.innerWidth / (Config.radius * 2));
