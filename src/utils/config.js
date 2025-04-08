@@ -4,10 +4,8 @@ export class Config {
   static dx = 20;
   static dy = 0;
   static speed = 6;
-  static ballsAmount = 2;
-  static maxBalls = Math.floor(
-    (0.9 * canvas.width * canvas.height) / (Math.PI * Math.pow(this.radius, 2))
-  );
+  static ballsAmount = 1;
+  static maxBalls = this.calculateBallsMaxAmount(0.07);
 
   static font = "50px Arial";
   static colors = [
@@ -20,4 +18,11 @@ export class Config {
     "#44CF6C",
     "#54457F",
   ];
+
+  static calculateBallsMaxAmount(coveragePercent) {
+    let maxInRow = Math.floor(window.innerWidth / (Config.radius * 2));
+    let maxInColumn = Math.floor(window.innerHeight / (Config.radius * 2));
+    let maxFit = maxInColumn * maxInRow;
+    return maxFit * coveragePercent;
+  }
 }

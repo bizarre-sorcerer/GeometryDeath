@@ -13,7 +13,6 @@ export class GameUtils {
   static gameOngoing = true;
   static gameInitTimeStamp;
   static lastTimeBallsAdded;
-  static frame = 0;
 
   static setUpCanvas(canvas, ctx) {
     canvas.width = window.innerWidth;
@@ -44,6 +43,7 @@ export class GameUtils {
       ball.changeDirectionRandom();
       ball.setRandomColor();
       this.allGameObjects.push(ball);
+      this.balls.push(ball);
     }
   }
 
@@ -54,11 +54,6 @@ export class GameUtils {
     canvas.addEventListener("mousemove", function (event) {
       physics.movePlayer(GameUtils.player, event.clientX, event.clientY);
     });
-  }
-
-  static handlePoints(renderer) {
-    GameUtils.points += 0.5;
-    renderer.renderPoints(GameUtils.points);
   }
 
   static createNewBallsPeriodically() {
