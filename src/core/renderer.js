@@ -1,7 +1,6 @@
 import { Ball } from "../entities/ball.js";
 import { LifeObject } from "../entities/life-object.js";
 import { Player } from "../entities/player.js";
-import { Rect } from "../entities/rect.js";
 import { GameUtils } from "../utils/game-utils.js";
 
 export class Renderer {
@@ -13,6 +12,10 @@ export class Renderer {
     this.ctx.beginPath();
     this.ctx.strokeStyle = gameObject.color;
     this.ctx.lineWidth = gameObject.thickness;
+
+    console.log(gameObject);
+    console.log(gameObject.thickness);
+    console.log(" ");
 
     if (
       gameObject instanceof Ball ||
@@ -28,16 +31,9 @@ export class Renderer {
         false
       );
       if (gameObject instanceof LifeObject) {
-        this.ctx.fillStyle = "red";
+        this.ctx.fillStyle = gameObject.fillColor;
         this.ctx.fill();
       }
-    } else if (gameObject instanceof Rect || gameObject instanceof Player) {
-      this.ctx.rect(
-        gameObject.x,
-        gameObject.y,
-        gameObject.width,
-        gameObject.height
-      );
     }
     this.ctx.stroke();
   }

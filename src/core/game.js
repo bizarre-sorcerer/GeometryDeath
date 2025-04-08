@@ -1,7 +1,6 @@
 import { Renderer } from "./renderer.js";
 import { Physics } from "./physics.js";
 import { GameUtils } from "../utils/game-utils.js";
-import { Config } from "../utils/config.js";
 
 export class Game {
   constructor(canvasElement) {
@@ -14,8 +13,6 @@ export class Game {
   }
 
   init() {
-    console.log(Config.maxBalls);
-
     GameUtils.setUpCanvas(this.canvas, this.ctx);
     GameUtils.createPlayer(this.canvas, this.physics);
     GameUtils.createMoreBalls();

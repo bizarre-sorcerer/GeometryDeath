@@ -31,14 +31,15 @@ export class GameUtils {
     for (let i = 0; i < Config.ballsAmount; i++) {
       let x = GameUtils.getRandomInt(minimalCoordinate, window.innerWidth);
       let y = GameUtils.getRandomInt(minimalCoordinate, window.innerHeight);
-      let ball = new Ball(
-        x,
-        y,
-        Config.radius,
-        Config.dx,
-        Config.dy,
-        Config.colors[0]
-      );
+      let ball = new Ball({
+        x: x,
+        y: y,
+        radius: Config.radius,
+        dx: Config.dx,
+        dy: Config.dy,
+        thickness: Config.thickness,
+        color: Config.colors[0],
+      });
 
       ball.changeDirectionRandom();
       ball.setRandomColor();
@@ -48,7 +49,14 @@ export class GameUtils {
   }
 
   static createPlayer(canvas, physics) {
-    GameUtils.player = new Player(10, 10);
+    GameUtils.player = new Player({
+      x: 10,
+      y: 10,
+      radius: Config.playerSize,
+      thickness: Config.thickness,
+      color: Config.playerColor,
+      amountOfLives: Config.defaultAmountOfLives,
+    });
     GameUtils.allGameObjects.push(this.player);
 
     canvas.addEventListener("mousemove", function (event) {
@@ -78,7 +86,14 @@ export class GameUtils {
 
       let x = GameUtils.getRandomInt(10, window.innerWidth);
       let y = GameUtils.getRandomInt(10, window.innerHeight);
-      let lifeObject = new LifeObject(x, y, 10);
+      let lifeObject = new LifeObject({
+        x: x,
+        y: y,
+        radius: 10,
+        thickness: 0,
+        color: "red",
+        fillColor: "red",
+      });
 
       GameUtils.allGameObjects.push(lifeObject);
       GameUtils.lifeObjects.push(lifeObject);
