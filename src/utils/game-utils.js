@@ -18,6 +18,12 @@ export class GameUtils {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx.font = Config.font;
+
+    window.addEventListener("resize", function () {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      ctx.font = Config.font;
+    });
   }
 
   static getRandomInt(min, max) {
@@ -98,5 +104,13 @@ export class GameUtils {
       GameUtils.allGameObjects.push(lifeObject);
       GameUtils.lifeObjects.push(lifeObject);
     }, 5000);
+  }
+
+  static correctPlayerPosition() {
+    if (this.player.x + this.player.radius > window.innerWidth) {
+      this.player.x = window.innerWidth - this.player.radius;
+    } else if (this.player.y + this.player.radius > window.innerHeight) {
+      this.player.y = window.innerHeight - this.player.radius;
+    }
   }
 }
