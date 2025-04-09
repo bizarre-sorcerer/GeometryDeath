@@ -13,10 +13,6 @@ export class Renderer {
     this.ctx.strokeStyle = gameObject.color;
     this.ctx.lineWidth = gameObject.thickness;
 
-    console.log(gameObject);
-    console.log(gameObject.thickness);
-    console.log(" ");
-
     if (
       gameObject instanceof Ball ||
       gameObject instanceof Player ||

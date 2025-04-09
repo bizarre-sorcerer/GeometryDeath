@@ -31,6 +31,7 @@ export class Game {
 
     if (GameUtils.gameOngoing) {
       GameUtils.createNewBallsPeriodically();
+      GameUtils.correctPlayerPosition();
       this.renderer.renderFrame(GameUtils.allGameObjects);
     } else {
       clearInterval(GameUtils.lifeObjectsInterval);
