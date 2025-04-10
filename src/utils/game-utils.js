@@ -19,7 +19,7 @@ export class GameUtils {
     canvas.height = window.innerHeight;
     ctx.font = Config.font;
 
-    window.addEventListener("resize", function () {
+    window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       ctx.font = Config.font;
