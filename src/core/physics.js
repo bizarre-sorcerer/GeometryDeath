@@ -69,11 +69,25 @@ export class Physics {
     return distance;
   }
 
+  rectAndBallCollision(rect, ball) {
+    const closestX = Math.max(rect.x, Math.min(ball.x, rect.x + rect.width));
+    const closestY = Math.max(rect.y, Math.min(ball.y, rect.y + rect.height));
+
+    const distX = ball.x - closestX;
+    const distY = ball.y - closestY;
+    const distance = Math.sqrt(distX * distX + distY * distY);
+
+    return distance <= ball.radius;
+  }
+
   areObjectsColliding(gameObject, otherGameObject) {
     if (gameObject.isEqual(otherGameObject)) return;
 
-    let distance = this.calculateDistance(gameObject, otherGameObject);
+    if (gameObject instanceof LifeObject) {
+      return this.rectAndBallCollision(gameObject, otherGameObject);
+    }
 
+    let distance = this.calculateDistance(gameObject, otherGameObject);
     return distance < gameObject.radius + otherGameObject.radius;
   }
 

@@ -1,3 +1,5 @@
+"use strict";
+
 import { Game } from "./core/game.js";
 import { GameUtils } from "./utils/game-utils.js";
 

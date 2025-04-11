@@ -13,6 +13,7 @@ export class GameUtils {
   static gameOngoing = true;
   static gameInitTimeStamp;
   static lastTimeBallsAdded;
+  static lifeIndicator;
 
   static setUpCanvas(canvas, ctx) {
     canvas.width = window.innerWidth;
@@ -84,34 +85,49 @@ export class GameUtils {
     GameUtils.lastTimeBallsAdded = performance.now();
   }
 
+  static createLifeIndicator() {
+    let lifeObject = new LifeObject({
+      x: null,
+      y: null,
+      thickness: 0,
+      svgString: Config.lifeSvg,
+    });
+
+    GameUtils.lifeIndicator = lifeObject;
+  }
+
   static createLifeObjectsPeriodically() {
     GameUtils.lifeObjectsInterval = setInterval(function () {
-      if (
+      let playerHasMaxAmountOfLives =
         GameUtils.lifeObjects.length >=
-        Config.maxAmountOfLives - GameUtils.player.amountOfLives
-      ) {
+        Config.maxAmountOfLives - GameUtils.player.amountOfLives;
+
+      if (playerHasMaxAmountOfLives) {
         return;
       }
 
-      let ballsToCreate =
+      let maxNeededAmount =
         Config.maxAmountOfLives -
         GameUtils.player.amountOfLives -
         GameUtils.lifeObjects.length;
-      for (let i = 0; i < ballsToCreate; i++) {
+
+      let amountToCreate = Math.min(2, maxNeededAmount);
+
+      for (let i = 0; i < amountToCreate; i++) {
         let x = GameUtils.getRandomInt(10, window.innerWidth);
         let y = GameUtils.getRandomInt(10, window.innerHeight);
+
         let lifeObject = new LifeObject({
           x: x,
           y: y,
-          radius: 10,
           thickness: 0,
-          color: "red",
-          fillColor: "red",
+          svgString: Config.lifeSvg,
         });
+
         GameUtils.allGameObjects.push(lifeObject);
         GameUtils.lifeObjects.push(lifeObject);
       }
-    }, 15000);
+    }, 10000);
   }
 
   static correctPlayerPosition() {
