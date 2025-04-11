@@ -20,7 +20,8 @@ export class Config {
     "#54457F",
   ];
   static playerColor = "#ffffff";
-  static defaultAmountOfLives = 1;
+  static defaultAmountOfLives = 4;
+  static maxAmountOfLives = 4;
 
   static calculateBallsMaxAmount(coveragePercent) {
     let maxInRow = Math.floor(window.innerWidth / (Config.radius * 2));

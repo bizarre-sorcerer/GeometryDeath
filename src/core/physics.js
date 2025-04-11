@@ -169,7 +169,9 @@ export class Physics {
     for (let gameObject of gameObjects) {
       if (this.areObjectsColliding(lifeObject, gameObject)) {
         if (gameObject instanceof Player) {
-          GameUtils.player.amountOfLives += 1;
+          if (GameUtils.player.amountOfLives < Config.maxAmountOfLives) {
+            GameUtils.player.amountOfLives += 1;
+          }
 
           let indexLifeObjects = GameUtils.lifeObjects.indexOf(lifeObject);
           let indexGameObjects = GameUtils.allGameObjects.indexOf(lifeObject);

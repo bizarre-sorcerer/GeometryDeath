@@ -1,5 +1,4 @@
 import { GameObject } from "./game-object.js";
-import { Config } from "../utils/config.js";
 
 export class Player extends GameObject {
   constructor({ x, y, radius, thickness, color, amountOfLives } = {}) {

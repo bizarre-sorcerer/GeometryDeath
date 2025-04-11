@@ -86,24 +86,32 @@ export class GameUtils {
 
   static createLifeObjectsPeriodically() {
     GameUtils.lifeObjectsInterval = setInterval(function () {
-      if (GameUtils.lifeObjects.length >= 3) {
+      if (
+        GameUtils.lifeObjects.length >=
+        Config.maxAmountOfLives - GameUtils.player.amountOfLives
+      ) {
         return;
       }
 
-      let x = GameUtils.getRandomInt(10, window.innerWidth);
-      let y = GameUtils.getRandomInt(10, window.innerHeight);
-      let lifeObject = new LifeObject({
-        x: x,
-        y: y,
-        radius: 10,
-        thickness: 0,
-        color: "red",
-        fillColor: "red",
-      });
-
-      GameUtils.allGameObjects.push(lifeObject);
-      GameUtils.lifeObjects.push(lifeObject);
-    }, 5000);
+      let ballsToCreate =
+        Config.maxAmountOfLives -
+        GameUtils.player.amountOfLives -
+        GameUtils.lifeObjects.length;
+      for (let i = 0; i < ballsToCreate; i++) {
+        let x = GameUtils.getRandomInt(10, window.innerWidth);
+        let y = GameUtils.getRandomInt(10, window.innerHeight);
+        let lifeObject = new LifeObject({
+          x: x,
+          y: y,
+          radius: 10,
+          thickness: 0,
+          color: "red",
+          fillColor: "red",
+        });
+        GameUtils.allGameObjects.push(lifeObject);
+        GameUtils.lifeObjects.push(lifeObject);
+      }
+    }, 15000);
   }
 
   static correctPlayerPosition() {
