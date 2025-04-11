@@ -48,14 +48,12 @@ function checkIfMobile() {
 }
 
 function preventTabResizes() {
-  let keycodes = [189, 187, 17];
+  let keycodes = [17, 189, 187, 107, 109];
 
   let target = window.opera ? document.body : document;
   target.addEventListener(
     "keydown",
     (event) => {
-      console.log(event.keyCode);
-
       if (keycodes.indexOf(event.keyCode) != -1) {
         event.preventDefault();
       }
