@@ -69,11 +69,25 @@ export class Physics {
     return distance;
   }
 
+  rectAndBallCollision(rect, ball) {
+    const closestX = Math.max(rect.x, Math.min(ball.x, rect.x + rect.width));
+    const closestY = Math.max(rect.y, Math.min(ball.y, rect.y + rect.height));
+
+    const distX = ball.x - closestX;
+    const distY = ball.y - closestY;
+    const distance = Math.sqrt(distX * distX + distY * distY);
+
+    return distance <= ball.radius;
+  }
+
   areObjectsColliding(gameObject, otherGameObject) {
     if (gameObject.isEqual(otherGameObject)) return;
 
-    let distance = this.calculateDistance(gameObject, otherGameObject);
+    if (gameObject instanceof LifeObject) {
+      return this.rectAndBallCollision(gameObject, otherGameObject);
+    }
 
+    let distance = this.calculateDistance(gameObject, otherGameObject);
     return distance < gameObject.radius + otherGameObject.radius;
   }
 
@@ -169,7 +183,9 @@ export class Physics {
     for (let gameObject of gameObjects) {
       if (this.areObjectsColliding(lifeObject, gameObject)) {
         if (gameObject instanceof Player) {
-          GameUtils.player.amountOfLives += 1;
+          if (GameUtils.player.amountOfLives < Config.maxAmountOfLives) {
+            GameUtils.player.amountOfLives += 1;
+          }
 
           let indexLifeObjects = GameUtils.lifeObjects.indexOf(lifeObject);
           let indexGameObjects = GameUtils.allGameObjects.indexOf(lifeObject);

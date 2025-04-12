@@ -18,6 +18,7 @@ export class Game {
     GameUtils.createMoreBalls();
     GameUtils.keepTrackOfTime();
     GameUtils.createLifeObjectsPeriodically();
+    GameUtils.createLifeIndicator();
 
     let self = this;
     this.physicsAndPointsInterval = setInterval(function () {

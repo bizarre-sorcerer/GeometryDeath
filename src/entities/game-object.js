@@ -1,8 +1,7 @@
 export class GameObject {
-  constructor({ x, y, color, thickness } = {}) {
+  constructor({ x, y, color } = {}) {
     this.x = x;
     this.y = y;
     this.color = color;
-    this.thickness = thickness;
   }
 }
