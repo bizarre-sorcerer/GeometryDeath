@@ -14,6 +14,7 @@ export class GameUtils {
   static gameInitTimeStamp;
   static lastTimeBallsAdded;
   static lifeIndicator;
+  static loseMessage;
 
   static setUpCanvas(canvas, ctx) {
     canvas.width = window.innerWidth;
@@ -120,7 +121,6 @@ export class GameUtils {
         let lifeObject = new LifeObject({
           x: x,
           y: y,
-          thickness: 0,
           svgString: Config.lifeSvg,
         });
 

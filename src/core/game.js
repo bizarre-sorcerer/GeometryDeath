@@ -1,6 +1,8 @@
 import { Renderer } from "./renderer.js";
 import { Physics } from "./physics.js";
 import { GameUtils } from "../utils/game-utils.js";
+import { ShieldObject } from "../entities/shield-object.js";
+import { Config } from "../utils/config.js";
 
 export class Game {
   constructor(canvasElement) {
@@ -20,6 +22,17 @@ export class Game {
     GameUtils.createLifeObjectsPeriodically();
     GameUtils.createLifeIndicator();
 
+    setTimeout(() => {
+      let x = GameUtils.getRandomInt(20, window.innerWidth - 40);
+      let y = GameUtils.getRandomInt(20, window.innerHeight - 40);
+      let shieldObject = new ShieldObject({
+        x: x,
+        y: y,
+        svgString: Config.shieldSvg,
+      });
+      GameUtils.allGameObjects.push(shieldObject);
+    }, 5000);
+
     let self = this;
     this.physicsAndPointsInterval = setInterval(function () {
       GameUtils.points += 0.35;
@@ -37,7 +50,7 @@ export class Game {
     } else {
       clearInterval(GameUtils.lifeObjectsInterval);
       clearInterval(this.physicsAndPointsInterval);
-      this.renderer.renderLoseMessage();
+      this.renderer.renderLoseMessage(GameUtils.loseMessage);
     }
 
     requestAnimationFrame(this.gameLoop);

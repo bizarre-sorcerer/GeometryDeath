@@ -3,6 +3,8 @@ import { Ball } from "../entities/ball.js";
 import { Player } from "../entities/player.js";
 import { GameUtils } from "../utils/game-utils.js";
 import { LifeObject } from "../entities/life-object.js";
+import { ShieldObject } from "../entities/shield-object.js";
+import { SpecialEffectsObject } from "../entities/special-effects-object.js";
 
 export class Physics {
   static xDistance = 0;
@@ -83,7 +85,7 @@ export class Physics {
   areObjectsColliding(gameObject, otherGameObject) {
     if (gameObject.isEqual(otherGameObject)) return;
 
-    if (gameObject instanceof LifeObject) {
+    if (gameObject instanceof SpecialEffectsObject) {
       return this.rectAndBallCollision(gameObject, otherGameObject);
     }
 
@@ -169,6 +171,9 @@ export class Physics {
         }
         if (player.amountOfLives <= 1) {
           GameUtils.gameOngoing = false;
+          GameUtils.loseMessage = `LOL, only ${Math.ceil(
+            GameUtils.points
+          )} points?`;
         }
 
         let index = GameUtils.allGameObjects.indexOf(gameObject);
@@ -181,18 +186,29 @@ export class Physics {
 
   handleLifeObjectPhysics(lifeObject, gameObjects) {
     for (let gameObject of gameObjects) {
-      if (this.areObjectsColliding(lifeObject, gameObject)) {
-        if (gameObject instanceof Player) {
-          if (GameUtils.player.amountOfLives < Config.maxAmountOfLives) {
-            GameUtils.player.amountOfLives += 1;
-          }
+      if (
+        gameObject instanceof Player &&
+        this.areObjectsColliding(lifeObject, gameObject)
+      ) {
+        GameUtils.player.amountOfLives += 1;
 
-          let indexLifeObjects = GameUtils.lifeObjects.indexOf(lifeObject);
-          let indexGameObjects = GameUtils.allGameObjects.indexOf(lifeObject);
+        let indexLifeObjects = GameUtils.lifeObjects.indexOf(lifeObject);
+        let indexGameObjects = GameUtils.allGameObjects.indexOf(lifeObject);
 
-          GameUtils.lifeObjects.splice(indexLifeObjects, 1);
-          GameUtils.allGameObjects.splice(indexGameObjects, 1);
-        }
+        GameUtils.lifeObjects.splice(indexLifeObjects, 1);
+        GameUtils.allGameObjects.splice(indexGameObjects, 1);
+      }
+    }
+  }
+
+  hangleShieldObjectPhysics(shieldObject, gameObjects) {
+    for (let gameObject of gameObjects) {
+      if (
+        gameObject instanceof Player &&
+        this.areObjectsColliding(shieldObject, gameObject)
+      ) {
+        GameUtils.gameOngoing = false;
+        GameUtils.loseMessage = "SIKE BITCH!";
       }
     }
   }
@@ -205,6 +221,8 @@ export class Physics {
         this.handlePlayerPhysics(gameObject, gameObjects);
       } else if (gameObject instanceof LifeObject) {
         this.handleLifeObjectPhysics(gameObject, gameObjects);
+      } else if (gameObject instanceof ShieldObject) {
+        this.hangleShieldObjectPhysics(gameObject, gameObjects);
       }
     }
   }
