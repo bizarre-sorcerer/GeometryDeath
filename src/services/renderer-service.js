@@ -5,14 +5,15 @@ import { SpecialEffectsObject } from "../entities/special-effects-object.js";
 import { Config } from "../utils/config.js";
 import { GameUtils } from "../utils/game-utils.js";
 
-export class Renderer {
+export class RendererService {
   constructor(ctx) {
     this.ctx = ctx;
   }
 
   drawGameObject(gameObject) {
     this.ctx.beginPath();
-    this.ctx.strokeStyle = gameObject.color;
+    this.ctx.strokeStyle = gameObject.strokeColor;
+    this.ctx.fillStyle = gameObject.fillColor;
     this.ctx.lineWidth = gameObject.thickness;
 
     if (
@@ -30,6 +31,7 @@ export class Renderer {
       );
     }
     this.ctx.stroke();
+    this.ctx.fill();
   }
 
   renderPoints(points) {

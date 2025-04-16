@@ -5,10 +5,15 @@ import { GameUtils } from "../utils/game-utils.js";
 import { LifeObject } from "../entities/life-object.js";
 import { ShieldObject } from "../entities/shield-object.js";
 import { SpecialEffectsObject } from "../entities/special-effects-object.js";
+import { PlayerStates } from "../entities/player-states.js";
 
-export class Physics {
+export class PhysicsService {
   static xDistance = 0;
   static yDistance = 0;
+
+  constructor(playerService) {
+    this.playerService = playerService;
+  }
 
   movePlayer(player, x, y) {
     if (
@@ -64,8 +69,8 @@ export class Physics {
     const xDistance = otherGameObject.x - gameObject.x;
     const yDistance = otherGameObject.y - gameObject.y;
 
-    Physics.xDistance = xDistance;
-    Physics.yDistance = yDistance;
+    PhysicsService.xDistance = xDistance;
+    PhysicsService.yDistance = yDistance;
 
     const distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
     return distance;
@@ -85,8 +90,11 @@ export class Physics {
   areObjectsColliding(gameObject, otherGameObject) {
     if (gameObject.isEqual(otherGameObject)) return;
 
+    // to do: исправить этот гавно код
     if (gameObject instanceof SpecialEffectsObject) {
       return this.rectAndBallCollision(gameObject, otherGameObject);
+    } else if (otherGameObject instanceof SpecialEffectsObject) {
+      return this.rectAndBallCollision(otherGameObject, gameObject);
     }
 
     let distance = this.calculateDistance(gameObject, otherGameObject);
@@ -97,8 +105,8 @@ export class Physics {
     let distance = this.calculateDistance(ball, otherBall);
 
     const overlap = ball.radius + otherBall.radius - distance;
-    const correctionX = (overlap / 2) * (Physics.xDistance / distance);
-    const correctionY = (overlap / 2) * (Physics.yDistance / distance);
+    const correctionX = (overlap / 2) * (PhysicsService.xDistance / distance);
+    const correctionY = (overlap / 2) * (PhysicsService.yDistance / distance);
     ball.x -= correctionX;
     ball.y -= correctionY;
     otherBall.x += correctionX;
@@ -108,8 +116,8 @@ export class Physics {
   calculateNewBallSpeeds(ball, otherBall) {
     let distance = this.calculateDistance(ball, otherBall);
 
-    const normalVectorX = Physics.xDistance / distance;
-    const normalVectorY = Physics.yDistance / distance;
+    const normalVectorX = PhysicsService.xDistance / distance;
+    const normalVectorY = PhysicsService.yDistance / distance;
     const tangentVectorX = -normalVectorY;
     const tangentVectorY = normalVectorX;
 
@@ -163,11 +171,36 @@ export class Physics {
     }
   }
 
+  handleLifeObjectCollision(player, lifeObject) {
+    player.amountOfLives += 1;
+
+    let indexLifeObjects = GameUtils.lifeObjects.indexOf(lifeObject);
+    let indexGameObjects = GameUtils.allGameObjects.indexOf(lifeObject);
+
+    GameUtils.lifeObjects.splice(indexLifeObjects, 1);
+    GameUtils.allGameObjects.splice(indexGameObjects, 1);
+  }
+
+  handleShieldObjectCollison(player, shieldObject) {
+    GameUtils.shieldAvailable = false;
+    this.playerService.changeStateToProtected(player);
+
+    let shieldIndex = GameUtils.allGameObjects.indexOf(shieldObject);
+    GameUtils.allGameObjects.splice(shieldIndex, 1);
+  }
+
   handlePlayerPhysics(player, gameObjects) {
     for (let gameObject of gameObjects) {
       if (this.areObjectsColliding(player, gameObject)) {
         if (gameObject instanceof LifeObject) {
+          this.handleLifeObjectCollision(player, gameObject);
           return;
+        } else if (gameObject instanceof ShieldObject) {
+          this.handleShieldObjectCollison(player, gameObject);
+          return;
+        }
+        if (player.state == PlayerStates.DEFAULT) {
+          player.amountOfLives -= 1;
         }
         if (player.amountOfLives <= 1) {
           GameUtils.gameOngoing = false;
@@ -178,51 +211,16 @@ export class Physics {
 
         let index = GameUtils.allGameObjects.indexOf(gameObject);
         GameUtils.allGameObjects.splice(index, 1);
-
-        player.amountOfLives -= 1;
-      }
-    }
-  }
-
-  handleLifeObjectPhysics(lifeObject, gameObjects) {
-    for (let gameObject of gameObjects) {
-      if (
-        gameObject instanceof Player &&
-        this.areObjectsColliding(lifeObject, gameObject)
-      ) {
-        GameUtils.player.amountOfLives += 1;
-
-        let indexLifeObjects = GameUtils.lifeObjects.indexOf(lifeObject);
-        let indexGameObjects = GameUtils.allGameObjects.indexOf(lifeObject);
-
-        GameUtils.lifeObjects.splice(indexLifeObjects, 1);
-        GameUtils.allGameObjects.splice(indexGameObjects, 1);
-      }
-    }
-  }
-
-  hangleShieldObjectPhysics(shieldObject, gameObjects) {
-    for (let gameObject of gameObjects) {
-      if (
-        gameObject instanceof Player &&
-        this.areObjectsColliding(shieldObject, gameObject)
-      ) {
-        GameUtils.gameOngoing = false;
-        GameUtils.loseMessage = "SIKE BITCH!";
       }
     }
   }
 
   processPhysics(gameObjects) {
     for (let gameObject of gameObjects) {
-      if (gameObject instanceof Ball) {
+      if (gameObject instanceof Player) {
+        this.handlePlayerPhysics(GameUtils.player, gameObjects);
+      } else if (gameObject instanceof Ball) {
         this.handleBallPhysics(gameObject, gameObjects);
-      } else if (gameObject instanceof Player) {
-        this.handlePlayerPhysics(gameObject, gameObjects);
-      } else if (gameObject instanceof LifeObject) {
-        this.handleLifeObjectPhysics(gameObject, gameObjects);
-      } else if (gameObject instanceof ShieldObject) {
-        this.hangleShieldObjectPhysics(gameObject, gameObjects);
       }
     }
   }

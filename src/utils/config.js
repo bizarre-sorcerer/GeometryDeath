@@ -18,7 +18,8 @@ export class Config {
     "#44CF6C",
     "#54457F",
   ];
-  static playerColor = "#ffffff";
+  static defaultStrokeColor = "#ffffff";
+  static defaultFillColor = "#00000000";
   static defaultAmountOfLives = 5;
   static maxAmountOfLives = 5;
 
