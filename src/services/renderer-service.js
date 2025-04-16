@@ -1,17 +1,19 @@
 import { Ball } from "../entities/ball.js";
 import { LifeObject } from "../entities/life-object.js";
 import { Player } from "../entities/player.js";
+import { SpecialEffectsObject } from "../entities/special-effects-object.js";
 import { Config } from "../utils/config.js";
 import { GameUtils } from "../utils/game-utils.js";
 
-export class Renderer {
+export class RendererService {
   constructor(ctx) {
     this.ctx = ctx;
   }
 
   drawGameObject(gameObject) {
     this.ctx.beginPath();
-    this.ctx.strokeStyle = gameObject.color;
+    this.ctx.strokeStyle = gameObject.strokeColor;
+    this.ctx.fillStyle = gameObject.fillColor;
     this.ctx.lineWidth = gameObject.thickness;
 
     if (
@@ -29,13 +31,14 @@ export class Renderer {
       );
     }
     this.ctx.stroke();
+    this.ctx.fill();
   }
 
   renderPoints(points) {
     this.ctx.strokeText(Math.ceil(points), window.innerWidth / 2 - 19, 60);
   }
 
-  renderLives(lifeObject, lives) {
+  renderLivesIndicator(lifeObject, lives) {
     let xPos = 20;
     for (let i = 0; i < lives; i++) {
       let img = lifeObject.img;
@@ -50,33 +53,35 @@ export class Renderer {
     }
   }
 
-  renderLifeObject(lifeObject) {
-    let img = lifeObject.img;
+  renderSpecialEffectsObject(specialEffectsObject) {
+    let img = specialEffectsObject.img;
     this.ctx.drawImage(
       img,
-      lifeObject.x,
-      lifeObject.y,
-      lifeObject.width,
-      lifeObject.height
+      specialEffectsObject.x,
+      specialEffectsObject.y,
+      specialEffectsObject.width,
+      specialEffectsObject.height
     );
   }
 
   renderFrame(gameObjects) {
     for (let gameObject of gameObjects) {
-      if (gameObject instanceof LifeObject) {
-        this.renderLifeObject(gameObject);
+      if (gameObject instanceof SpecialEffectsObject) {
+        this.renderSpecialEffectsObject(gameObject);
       } else {
         this.drawGameObject(gameObject);
       }
     }
     this.renderPoints(GameUtils.points);
-    this.renderLives(GameUtils.lifeIndicator, GameUtils.player.amountOfLives);
+    this.renderLivesIndicator(
+      GameUtils.lifeIndicator,
+      GameUtils.player.amountOfLives
+    );
   }
 
-  renderLoseMessage() {
-    let points = Math.ceil(GameUtils.points);
+  renderLoseMessage(message) {
     this.ctx.strokeText(
-      `LOL, only ${points} points?`,
+      message,
       window.innerWidth / 2 - 19,
       window.innerHeight / 2
     );

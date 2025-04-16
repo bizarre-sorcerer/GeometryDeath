@@ -2,6 +2,8 @@ import { Config } from "./config.js";
 import { Ball } from "../entities/ball.js";
 import { Player } from "../entities/player.js";
 import { LifeObject } from "../entities/life-object.js";
+import { ShieldObject } from "../entities/shield-object.js";
+import { PlayerStates } from "../entities/player-states.js";
 
 export class GameUtils {
   static allGameObjects = [];
@@ -14,6 +16,8 @@ export class GameUtils {
   static gameInitTimeStamp;
   static lastTimeBallsAdded;
   static lifeIndicator;
+  static loseMessage;
+  static shieldAvailable = false;
 
   static setUpCanvas(canvas, ctx) {
     canvas.width = window.innerWidth;
@@ -45,7 +49,8 @@ export class GameUtils {
         dx: Config.dx,
         dy: Config.dy,
         thickness: Config.thickness,
-        color: Config.colors[0],
+        strokeColor: Config.colors[0],
+        fillColor: Config.defaultFillColor,
       });
 
       ball.changeDirectionRandom();
@@ -61,8 +66,10 @@ export class GameUtils {
       y: 10,
       radius: Config.playerSize,
       thickness: Config.thickness,
-      color: Config.playerColor,
+      strokeColor: Config.defaultStrokeColor,
+      fillColor: Config.defaultFillColor,
       amountOfLives: Config.defaultAmountOfLives,
+      state: PlayerStates.DEFAULT,
     });
     GameUtils.allGameObjects.push(this.player);
 
@@ -120,7 +127,6 @@ export class GameUtils {
         let lifeObject = new LifeObject({
           x: x,
           y: y,
-          thickness: 0,
           svgString: Config.lifeSvg,
         });
 
@@ -136,5 +142,21 @@ export class GameUtils {
     } else if (this.player.y + this.player.radius > window.innerHeight) {
       this.player.y = window.innerHeight - this.player.radius;
     }
+  }
+
+  static createShield() {
+    GameUtils.shieldInterval = setInterval(() => {
+      if (!GameUtils.shieldAvailable) {
+        let x = GameUtils.getRandomInt(20, window.innerWidth - 40);
+        let y = GameUtils.getRandomInt(20, window.innerHeight - 40);
+        let shieldObject = new ShieldObject({
+          x: x,
+          y: y,
+          svgString: Config.shieldSvg,
+        });
+        GameUtils.allGameObjects.push(shieldObject);
+        GameUtils.shieldAvailable = true;
+      }
+    }, 15000);
   }
 }

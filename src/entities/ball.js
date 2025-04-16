@@ -3,12 +3,13 @@ import { Config } from "../utils/config.js";
 import { GameUtils } from "../utils/game-utils.js";
 
 export class Ball extends GameObject {
-  constructor({ x, y, radius, dx, dy, thickness, color }) {
-    super({ x, y, color });
+  constructor({ x, y, radius, dx, dy, thickness, strokeColor, fillColor }) {
+    super({ x, y });
     this.dx = dx;
     this.dy = dy;
     this.thickness = thickness;
     this.radius = radius;
+    this.strokeColor = strokeColor;
   }
 
   changeDirectionRandom() {
@@ -28,19 +29,19 @@ export class Ball extends GameObject {
 
   setRandomColor() {
     let randomIndex = GameUtils.getRandomInt(0, Config.colors.length);
-    this.color = Config.colors[randomIndex];
+    this.strokeColor = Config.colors[randomIndex];
   }
 
   changeColor() {
     let randomIndex = GameUtils.getRandomInt(0, Config.colors.length);
-    let currentColor = Config.colors.indexOf(this.color);
+    let currentColor = Config.colors.indexOf(this.strokeColor);
     let nextColor = Config.colors[randomIndex];
 
     do {
       randomIndex = GameUtils.getRandomInt(0, Config.colors.length);
     } while (currentColor === nextColor);
 
-    this.color = Config.colors[randomIndex];
+    this.strokeColor = Config.colors[randomIndex];
   }
 
   isEqual(otherBall) {

@@ -1,24 +1,28 @@
-import { Renderer } from "./renderer.js";
-import { Physics } from "./physics.js";
+import { PlayerService } from "../services/player-service.js";
+import { RendererService } from "../services/renderer-service.js";
+import { PhysicsService } from "../services/physics-service.js";
 import { GameUtils } from "../utils/game-utils.js";
 
 export class Game {
   constructor(canvasElement) {
     this.canvas = canvasElement;
-    this.ctx = this.canvas.getContext("2d");
-    this.renderer = new Renderer(this.ctx);
-    this.physics = new Physics();
 
     this.init();
   }
 
   init() {
+    this.ctx = this.canvas.getContext("2d");
+    this.playerService = new PlayerService();
+    this.renderer = new RendererService(this.ctx);
+    this.physics = new PhysicsService(this.playerService);
+
     GameUtils.setUpCanvas(this.canvas, this.ctx);
     GameUtils.createPlayer(this.canvas, this.physics);
     GameUtils.createMoreBalls();
     GameUtils.keepTrackOfTime();
     GameUtils.createLifeObjectsPeriodically();
     GameUtils.createLifeIndicator();
+    GameUtils.createShield();
 
     let self = this;
     this.physicsAndPointsInterval = setInterval(function () {
@@ -36,8 +40,9 @@ export class Game {
       this.renderer.renderFrame(GameUtils.allGameObjects);
     } else {
       clearInterval(GameUtils.lifeObjectsInterval);
+      clearInterval(GameUtils.shieldInterval);
       clearInterval(this.physicsAndPointsInterval);
-      this.renderer.renderLoseMessage();
+      this.renderer.renderLoseMessage(GameUtils.loseMessage);
     }
 
     requestAnimationFrame(this.gameLoop);
