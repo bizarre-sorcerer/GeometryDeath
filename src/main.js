@@ -1,7 +1,6 @@
 "use strict";
 
 import { Game } from "./core/game.js";
-import { GameUtils } from "./utils/game-utils.js";
 
 const body = document.querySelector("body");
 const canvas = document.querySelector("#canvas");
@@ -13,7 +12,6 @@ checkIfMobile();
 preventTabResizes();
 
 input.addEventListener("keydown", initGame);
-document.addEventListener("click", addRestartLogic);
 
 function initGame(event) {
   if (event.key === "Enter") {
@@ -25,12 +23,8 @@ function initGame(event) {
 
     game = new Game(canvas);
     game.startGame();
-  }
-}
 
-function addRestartLogic() {
-  if (!GameUtils.gameOngoing) {
-    game.restartGame();
+    canvas.addEventListener("click", game.restartGame.bind(game));
   }
 }
 
