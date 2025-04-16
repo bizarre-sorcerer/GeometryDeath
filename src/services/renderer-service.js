@@ -3,11 +3,11 @@ import { LifeObject } from "../entities/life-object.js";
 import { Player } from "../entities/player.js";
 import { SpecialEffectsObject } from "../entities/special-effects-object.js";
 import { Config } from "../utils/config.js";
-import { GameUtils } from "../utils/game-utils.js";
 
 export class RendererService {
-  constructor(ctx) {
+  constructor(ctx, gameService) {
     this.ctx = ctx;
+    this.gameService = gameService;
   }
 
   drawGameObject(gameObject) {
@@ -72,10 +72,10 @@ export class RendererService {
         this.drawGameObject(gameObject);
       }
     }
-    this.renderPoints(GameUtils.points);
+    this.renderPoints(this.gameService.points);
     this.renderLivesIndicator(
-      GameUtils.lifeIndicator,
-      GameUtils.player.amountOfLives
+      this.gameService.lifeIndicator,
+      this.gameService.player.amountOfLives
     );
   }
 

@@ -1,48 +1,49 @@
 import { PlayerService } from "../services/player-service.js";
 import { RendererService } from "../services/renderer-service.js";
 import { PhysicsService } from "../services/physics-service.js";
-import { GameUtils } from "../utils/game-utils.js";
+import { GameService } from "../services/game-service.js";
 
 export class Game {
   constructor(canvasElement) {
     this.canvas = canvasElement;
+    this.ctx = this.canvas.getContext("2d");
 
     this.init();
   }
 
   init() {
-    this.ctx = this.canvas.getContext("2d");
-    this.playerService = new PlayerService();
-    this.renderer = new RendererService(this.ctx);
-    this.physics = new PhysicsService(this.playerService);
+    this.gameService = new GameService();
+    this.playerService = new PlayerService(this.gameService);
+    this.renderer = new RendererService(this.ctx, this.gameService);
+    this.physics = new PhysicsService(this.playerService, this.gameService);
 
-    GameUtils.setUpCanvas(this.canvas, this.ctx);
-    GameUtils.createPlayer(this.canvas, this.physics);
-    GameUtils.createMoreBalls();
-    GameUtils.keepTrackOfTime();
-    GameUtils.createLifeObjectsPeriodically();
-    GameUtils.createLifeIndicator();
-    GameUtils.createShield();
+    this.gameService.setUpCanvas(this.canvas, this.ctx);
+    this.gameService.createPlayer(this.canvas, this.physics);
+    this.gameService.createMoreBalls();
+    this.gameService.keepTrackOfTime();
+    this.gameService.createLifeIndicator();
+    this.gameService.createLifeObjectsPeriodically();
+    this.gameService.createShieldPeriodically();
 
     let self = this;
-    this.physicsAndPointsInterval = setInterval(function () {
-      GameUtils.points += 0.35;
-      self.physics.processPhysics(GameUtils.allGameObjects);
+    this.physicsAndPointsInterval = setInterval(() => {
+      self.gameService.points += 0.35;
+      self.physics.processPhysics(this.gameService.allGameObjects);
     }, 15);
   }
 
   gameLoop = () => {
     this.renderer.clearScreen();
 
-    if (GameUtils.gameOngoing) {
-      GameUtils.createNewBallsPeriodically();
-      GameUtils.correctPlayerPosition();
-      this.renderer.renderFrame(GameUtils.allGameObjects);
+    if (this.gameService.gameOngoing) {
+      this.gameService.createNewBallsPeriodically();
+      this.gameService.correctPlayerPosition();
+      this.renderer.renderFrame(this.gameService.allGameObjects);
     } else {
-      clearInterval(GameUtils.lifeObjectsInterval);
-      clearInterval(GameUtils.shieldInterval);
+      clearInterval(this.gameService.lifeObjectsInterval);
+      clearInterval(this.gameService.shieldInterval);
       clearInterval(this.physicsAndPointsInterval);
-      this.renderer.renderLoseMessage(GameUtils.loseMessage);
+      this.renderer.renderLoseMessage(this.gameService.loseMessage);
     }
 
     requestAnimationFrame(this.gameLoop);
@@ -53,10 +54,7 @@ export class Game {
   }
 
   restartGame() {
-    GameUtils.allGameObjects = [];
-    GameUtils.lifeObjects = [];
-    GameUtils.points = 0;
-    GameUtils.gameOngoing = true;
+    this.gameService.restoreDefaultState();
 
     this.init();
   }
