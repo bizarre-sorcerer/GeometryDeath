@@ -7,11 +7,22 @@ import { LifeObject } from "../entities/life-object.js";
 import { ShieldObject } from "../entities/shield-object.js";
 
 export class GameService {
-  constructor() {
+  constructor(playerService, physicsService, rendererService) {
+    this.physicsService = physicsService;
+    this.playerService = playerService;
+    this.rendererService = rendererService;
     this.init();
   }
 
+  handleDependencyInjections() {
+    this.physicsService.setGameService(this);
+    this.physicsService.setPlayerService(this);
+    this.rendererService.setGameService(this);
+  }
+
   init() {
+    this.handleDependencyInjections();
+
     this.gameOngoing = true;
     this.player;
     this.shieldAvailable = false;
@@ -19,11 +30,14 @@ export class GameService {
     this.lifeObjects = [];
     this.balls = [];
     this.points = 0;
-    this.lifeObjectsInterval;
     this.lifeIndicator;
     this.gameInitTimeStamp;
     this.lastTimeBallsAdded;
     this.loseMessage;
+
+    this.lifeObjectsInterval;
+    this.physicsAndPointsInterval;
+    this.shieldInterval;
   }
 
   setUpCanvas(canvas, ctx) {
@@ -114,6 +128,14 @@ export class GameService {
     this.lifeIndicator = lifeObject;
   }
 
+  handlePhysicsAndPoints() {
+    let self = this;
+    this.physicsAndPointsInterval = setInterval(() => {
+      self.points += 0.35;
+      this.physicsService.processPhysics(this.allGameObjects);
+    }, 15);
+  }
+
   createLifeObjectsPeriodically() {
     let self = this;
     this.lifeObjectsInterval = setInterval(function () {
@@ -168,6 +190,12 @@ export class GameService {
     gameObjectsArray.splice(index, 1);
   }
 
+  clearIntervals() {
+    clearInterval(this.lifeObjectsInterval);
+    clearInterval(this.shieldInterval);
+    clearInterval(this.physicsAndPointsInterval);
+  }
+
   restoreDefaultState() {
     if (!this.gameOngoing) {
       this.allGameObjects = [];
@@ -178,6 +206,7 @@ export class GameService {
   }
 
   endGame() {
+    this.clearIntervals();
     this.restoreDefaultState();
     this.gameOngoing = false;
     this.loseMessage = `LOL, only ${Math.ceil(this.points)} points?`;
