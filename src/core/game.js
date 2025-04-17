@@ -12,38 +12,38 @@ export class Game {
   }
 
   init() {
-    this.gameService = new GameService();
     this.playerService = new PlayerService(this.gameService);
-    this.renderer = new RendererService(this.ctx, this.gameService);
-    this.physics = new PhysicsService(this.playerService, this.gameService);
+    this.rendererService = new RendererService(this.ctx, this.gameService);
+    this.physicsService = new PhysicsService(
+      this.playerService,
+      this.gameService
+    );
+
+    this.gameService = new GameService(
+      this.playerService,
+      this.physicsService,
+      this.rendererService
+    );
 
     this.gameService.setUpCanvas(this.canvas, this.ctx);
-    this.gameService.createPlayer(this.canvas, this.physics);
+    this.gameService.createPlayer(this.canvas, this.physicsService);
     this.gameService.createMoreBalls();
     this.gameService.keepTrackOfTime();
     this.gameService.createLifeIndicator();
     this.gameService.createLifeObjectsPeriodically();
     this.gameService.createShieldPeriodically();
-
-    let self = this;
-    this.physicsAndPointsInterval = setInterval(() => {
-      self.gameService.points += 0.35;
-      self.physics.processPhysics(this.gameService.allGameObjects);
-    }, 15);
+    this.gameService.handlePhysicsAndPoints();
   }
 
   gameLoop = () => {
-    this.renderer.clearScreen();
+    this.rendererService.clearScreen();
 
     if (this.gameService.gameOngoing) {
       this.gameService.createNewBallsPeriodically();
       this.gameService.correctPlayerPosition();
-      this.renderer.renderFrame(this.gameService.allGameObjects);
+      this.rendererService.renderFrame(this.gameService.allGameObjects);
     } else {
-      clearInterval(this.gameService.lifeObjectsInterval);
-      clearInterval(this.gameService.shieldInterval);
-      clearInterval(this.physicsAndPointsInterval);
-      this.renderer.renderLoseMessage(this.gameService.loseMessage);
+      this.rendererService.renderLoseMessage(this.gameService.loseMessage);
     }
 
     requestAnimationFrame(this.gameLoop);
@@ -54,8 +54,9 @@ export class Game {
   }
 
   restartGame() {
-    this.gameService.restoreDefaultState();
-
-    this.init();
+    if (!this.gameService.gameOngoing) {
+      this.gameService.restoreDefaultState();
+      this.init();
+    }
   }
 }

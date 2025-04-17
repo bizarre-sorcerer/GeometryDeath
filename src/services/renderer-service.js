@@ -5,8 +5,11 @@ import { SpecialEffectsObject } from "../entities/special-effects-object.js";
 import { Config } from "../utils/config.js";
 
 export class RendererService {
-  constructor(ctx, gameService) {
+  constructor(ctx) {
     this.ctx = ctx;
+  }
+
+  setGameService(gameService) {
     this.gameService = gameService;
   }
 

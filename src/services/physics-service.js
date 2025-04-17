@@ -6,9 +6,17 @@ import { PlayerStates } from "../entities/player-states.js";
 import { PhysicsUtils } from "../utils/physics-utils.js";
 
 export class PhysicsService {
-  constructor(playerService, gameService) {
-    this.playerService = playerService;
+  constructor() {
+    this.playerService = null;
+    this.gameService = null;
+  }
+
+  setGameService(gameService) {
     this.gameService = gameService;
+  }
+
+  setPlayerService(playerService) {
+    this.playerService = playerService;
   }
 
   movePlayer(player, x, y) {
