@@ -40,7 +40,6 @@ export class GameService {
 
     this.lifeObjectsInterval;
     this.physicsAndPointsInterval;
-    this.shieldInterval;
   }
 
   setUpCanvas(canvas, ctx) {
@@ -172,8 +171,8 @@ export class GameService {
     }, 10000);
   }
 
-  createShieldPeriodically() {
-    this.shieldInterval = setInterval(() => {
+  createShieldWithDelay() {
+    setTimeout(() => {
       if (!this.shieldAvailable) {
         let x = GameUtils.getRandomInt(20, window.innerWidth - 40);
         let y = GameUtils.getRandomInt(20, window.innerHeight - 40);
@@ -185,7 +184,7 @@ export class GameService {
         this.allGameObjects.push(shieldObject);
         this.shieldAvailable = true;
       }
-    }, 15000);
+    }, Config.shieldAppereanceDelay);
   }
 
   removeGameObject(gameObject, gameObjectsArray) {
@@ -195,7 +194,6 @@ export class GameService {
 
   clearIntervals() {
     clearInterval(this.lifeObjectsInterval);
-    clearInterval(this.shieldInterval);
     clearInterval(this.physicsAndPointsInterval);
   }
 
