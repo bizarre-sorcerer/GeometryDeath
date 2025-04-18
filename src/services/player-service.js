@@ -3,7 +3,11 @@ import { PlayerStates } from "../entities/player-states.js";
 import { Config } from "../utils/config.js";
 
 export class PlayerService {
-  constructor(gameService) {
+  constructor() {
+    this.gameService = null;
+  }
+
+  setGameService(gameService) {
     this.gameService = gameService;
   }
 
@@ -16,7 +20,7 @@ export class PlayerService {
       setTimeout(() => {
         player.state = PlayerStates.DEFAULT;
         this.gameService.player.fillColor = Config.defaultFillColor;
-      }, 5000);
+      }, 3000);
     }
   }
 }

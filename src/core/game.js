@@ -14,10 +14,7 @@ export class Game {
   init() {
     this.playerService = new PlayerService(this.gameService);
     this.rendererService = new RendererService(this.ctx, this.gameService);
-    this.physicsService = new PhysicsService(
-      this.playerService,
-      this.gameService
-    );
+    this.physicsService = new PhysicsService();
 
     this.gameService = new GameService(
       this.playerService,

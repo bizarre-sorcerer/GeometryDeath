@@ -16,8 +16,11 @@ export class GameService {
 
   handleDependencyInjections() {
     this.physicsService.setGameService(this);
-    this.physicsService.setPlayerService(this);
+    this.physicsService.setPlayerService(this.playerService);
+
     this.rendererService.setGameService(this);
+
+    this.playerService.setGameService(this);
   }
 
   init() {
@@ -182,7 +185,7 @@ export class GameService {
         this.allGameObjects.push(shieldObject);
         this.shieldAvailable = true;
       }
-    }, 30000);
+    }, 15000);
   }
 
   removeGameObject(gameObject, gameObjectsArray) {
