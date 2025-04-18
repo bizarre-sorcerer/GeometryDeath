@@ -20,7 +20,8 @@ export class PlayerService {
       setTimeout(() => {
         player.state = PlayerStates.DEFAULT;
         this.gameService.player.fillColor = Config.defaultFillColor;
-      }, 3000);
+        this.gameService.createShieldWithDelay();
+      }, Config.shieldDuration);
     }
   }
 }

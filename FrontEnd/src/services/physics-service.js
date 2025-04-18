@@ -96,10 +96,13 @@ export class PhysicsService {
 
   handleShieldObjectCollison(player, shieldObject) {
     this.gameService.shieldAvailable = false;
+
     this.playerService.changeStateToProtected(player);
 
-    let shieldIndex = this.gameService.allGameObjects.indexOf(shieldObject);
-    this.gameService.allGameObjects.splice(shieldIndex, 1);
+    this.gameService.removeGameObject(
+      shieldObject,
+      this.gameService.allGameObjects
+    );
   }
 
   handlePlayerPhysics(player, gameObjects) {

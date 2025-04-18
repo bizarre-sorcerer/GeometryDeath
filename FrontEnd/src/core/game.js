@@ -28,7 +28,7 @@ export class Game {
     this.gameService.keepTrackOfTime();
     this.gameService.createLifeIndicator();
     this.gameService.createLifeObjectsPeriodically();
-    this.gameService.createShieldPeriodically();
+    this.gameService.createShieldWithDelay();
     this.gameService.handlePhysicsAndPoints();
   }
 
