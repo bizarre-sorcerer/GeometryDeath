@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: GeometryDeathBE
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgredb
+    username: root_aidar
+    password: asdf
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
