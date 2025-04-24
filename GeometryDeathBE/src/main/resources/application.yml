@@ -18,3 +18,4 @@ spring:
   flyway:
     enabled: true
     validate-on-migrate: true
+    baseline-on-migrate: true

@@ -1,25 +1,26 @@
 package com.GeometryDeath.GeometryDeathBE.controllers;
 
-import com.GeometryDeath.GeometryDeathBE.services.AuthService;
 import com.GeometryDeath.GeometryDeathBE.services.impl.AuthServiceImpl;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@AllArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthController {
+
     AuthServiceImpl authService;
 
-    @PostMapping("/")
-    public void createTemporaryAccount(String username) {
-        authService.createTemporaryAccount(username);
+    @PostMapping("/create-guest-account")
+    public ResponseEntity<String> createTemporaryAccount(@RequestParam String username) {
+        return authService.createGuestAccount(username);
     }
 
     @PostMapping("/sign-in")
-    public void logInUser() {
-        // to do
-        System.out.println("LogInUser");
+    public ResponseEntity<HttpStatus> logInUser() {
+        return null;
     }
 
     @PostMapping("/sign-up")

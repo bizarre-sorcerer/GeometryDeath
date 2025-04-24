@@ -1,4 +1,4 @@
-create table if not exists users(
+create table if not exists public.users(
     id                          bigint primary key,
     username                    varchar(255),
     email                       varchar(255),
@@ -7,15 +7,17 @@ create table if not exists users(
     record                      bigint
 );
 
-create table if not exists roles(
+create table if not exists public.roles(
     id                          bigint primary key,
     role                        varchar(255)
 );
 
-create table if not exists user_roles (
+create table if not exists public.user_roles (
     user_id bigint not null,
     role_id bigint not null,
     primary key (user_id, role_id),
     foreign key (user_id) references users(id),
     foreign key (role_id) references roles(id)
 );
+
+create sequence if not exists id_sequence;

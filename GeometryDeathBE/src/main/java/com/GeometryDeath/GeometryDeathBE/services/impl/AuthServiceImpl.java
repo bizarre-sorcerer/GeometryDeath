@@ -6,6 +6,7 @@ import com.GeometryDeath.GeometryDeathBE.models.entities.User;
 import com.GeometryDeath.GeometryDeathBE.repositories.RoleRepository;
 import com.GeometryDeath.GeometryDeathBE.repositories.UserRepository;
 import com.GeometryDeath.GeometryDeathBE.services.AuthService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +15,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Optional;
 
+@AllArgsConstructor
+@Service
 public class AuthServiceImpl implements AuthService {
 
     UserRepository userRepository;
@@ -25,17 +30,22 @@ public class AuthServiceImpl implements AuthService {
     AuthenticationManager authenticationManager;
 
     @Override
-    public ResponseEntity<String> createTemporaryAccount(String username) {
-        User user = new User();
-        user.setUsername(username);
+    public ResponseEntity<String> createGuestAccount(String username) {
+        Optional<User> user =  userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Account with this username already exists");
+        }
+
+        User newUser = new User();
+        newUser.setUsername(username);
 
         Role roles = roleRepository.findByName("GUEST").
                 orElseThrow(() -> new RuntimeException("Role not found"));
-        user.setRoles(Collections.singletonList(roles));
-        userRepository.save(user);
+        newUser.setRoles(Collections.singletonList(roles));
+        userRepository.save(newUser);
 
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
+                newUser.getUsername(),
                 "",
                 Collections.singletonList(new SimpleGrantedAuthority("GUEST"))
         );

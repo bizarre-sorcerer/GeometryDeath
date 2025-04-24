@@ -28,13 +28,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests( auth -> auth
-                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll())
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
-                .sessionManagement(sessionManagementCustomizer -> sessionManagementCustomizer
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling((exception) -> exception.authenticationEntryPoint(authEntryPoint)
-                                .accessDeniedPage("/error/access-denied"));
+                .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                .requestMatchers("/error").permitAll())
+                    .csrf(AbstractHttpConfigurer::disable)
+                    .cors(Customizer.withDefaults())
+                    .sessionManagement(sessionManagementCustomizer -> sessionManagementCustomizer
+                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .exceptionHandling((exception) -> exception.authenticationEntryPoint(authEntryPoint)
+                            .accessDeniedPage("/error/access-denied"));
         http.addFilterBefore(JwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
