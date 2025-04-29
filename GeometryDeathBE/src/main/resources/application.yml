@@ -2,9 +2,9 @@ spring:
   application:
     name: GeometryDeathBE
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgredb
-    username: root_aidar
-    password: asdf
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
