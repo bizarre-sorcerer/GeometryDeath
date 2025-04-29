@@ -11,13 +11,13 @@ services:
     ports:
       - "5432:5432"
 
-  spring-app:
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgredb
-      SPRING_DATASOURCE_USERNAME: root_aidar
-      SPRING_DATASOURCE_PASSWORD: asdf
+#  spring-app:
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgredb
+#      SPRING_DATASOURCE_USERNAME: root_aidar
+#      SPRING_DATASOURCE_PASSWORD: asdf
