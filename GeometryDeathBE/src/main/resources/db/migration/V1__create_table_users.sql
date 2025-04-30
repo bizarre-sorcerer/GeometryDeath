@@ -21,3 +21,5 @@ create table if not exists public.user_roles (
 );
 
 create sequence if not exists id_sequence;
+
+insert into public.roles (id, role) VALUES (0,'GUEST');
