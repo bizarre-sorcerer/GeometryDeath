@@ -1,21 +1,28 @@
 spring:
-  application:
-    name: GeometryDeathBE
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  flyway:
-    enabled: true
-    validate-on-migrate: true
-    baseline-on-migrate: true
+    application:
+        name: GeometryDeathBE
+    datasource:
+        url: SPRING_DATASOURCE_URL
+        username: SPRING_DATASOURCE_USERNAME
+        password: SPRING_DATASOURCE_PASSWORD
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: false
+        properties:
+            hibernate:
+              format_sql: true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+    flyway:
+#      url:      ${SPRING_DATASOURCE_URL}
+#      username: ${SPRING_DATASOURCE_USERNAME}
+#      password: ${SPRING_DATASOURCE_PASSWORD}
+        enabled: true
+        locations: classpath:db/migration
+        validate-on-migrate: true
+        baseline-on-migrate: true
+logging:
+    level:
+        org.flywaydb: DEBUG
