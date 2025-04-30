@@ -3,7 +3,8 @@ import { setCookie, getCookie } from "./cookies-utils.js";
 export async function createGuestAccount(username) {
   try {
     const response = await fetch(
-      "http://localhost:8080/api/auth/create-guest-account",
+      "https://p01--build-and-deploy--92vp4znyczky.code.run/api/auth/create-guest-account",
+      // "http://localhost:8080/api/auth/create-guest-account",
       {
         method: "POST",
         headers: {
