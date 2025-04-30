@@ -16,9 +16,6 @@ spring:
         database: postgresql
         database-platform: org.hibernate.dialect.PostgreSQLDialect
     flyway:
-#      url:      ${SPRING_DATASOURCE_URL}
-#      username: ${SPRING_DATASOURCE_USERNAME}
-#      password: ${SPRING_DATASOURCE_PASSWORD}
         enabled: true
         locations: classpath:db/migration
         validate-on-migrate: true
