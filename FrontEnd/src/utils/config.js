@@ -1,11 +1,11 @@
 export class Config {
   static playerSize = 10;
   static radius = 15;
-  static dx = 20;
-  static dy = 0;
+  static dx = 4;
+  static dy = 4;
   static thickness = 2;
   static speed = 6;
-  static ballsAmount = 1;
+  static ballsAmount = 2;
   static maxBalls = this.calculateBallsMaxAmount(0.07);
 
   static font = "50px Arial";

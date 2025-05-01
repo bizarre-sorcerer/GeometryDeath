@@ -68,10 +68,9 @@ export class GameService {
         dy: Config.dy,
         thickness: Config.thickness,
         strokeColor: Config.colors[0],
-        fillColor: Config.defaultFillColor,
       });
 
-      ball.changeDirectionRandom();
+      // ball.changeDirectionRandom();
       ball.setRandomColor();
       this.allGameObjects.push(ball);
       this.balls.push(ball);
@@ -133,7 +132,7 @@ export class GameService {
   handlePhysicsAndPoints() {
     let self = this;
     this.physicsAndPointsInterval = setInterval(() => {
-      self.points += 0.35;
+      self.points += 0.4;
       this.physicsService.processPhysics(this.allGameObjects);
     }, 15);
   }

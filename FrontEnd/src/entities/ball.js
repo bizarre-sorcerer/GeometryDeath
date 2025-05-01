@@ -3,7 +3,7 @@ import { Config } from "../utils/config.js";
 import { GameUtils } from "../utils/game-utils.js";
 
 export class Ball extends GameObject {
-  constructor({ x, y, radius, dx, dy, thickness, strokeColor, fillColor }) {
+  constructor({ x, y, radius, dx, dy, thickness, strokeColor }) {
     super({ x, y });
     this.dx = dx;
     this.dy = dy;
@@ -12,20 +12,20 @@ export class Ball extends GameObject {
     this.strokeColor = strokeColor;
   }
 
-  changeDirectionRandom() {
-    let random = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+  // changeDirectionRandom() {
+  //   let random = Math.floor(Math.random() * (2 - 1 + 1) + 1);
 
-    if (random % 2 === 0) {
-      this.dx = 4;
-    } else {
-      this.dx = -4;
-    }
-    if (Math.floor(Math.random() * (2 - 1 + 1) + 1) % 2 === 0) {
-      this.dy = 4;
-    } else {
-      this.dy = -4;
-    }
-  }
+  //   if (random % 2 === 0) {
+  //     this.dx = Config.dx;
+  //   } else {
+  //     this.dx = Config.dx * -1;
+  //   }
+  //   if (Math.floor(Math.random() * (2 - 1 + 1) + 1) % 2 === 0) {
+  //     this.dy = Config.y;
+  //   } else {
+  //     this.dy = Config.y * -1;
+  //   }
+  // }
 
   setRandomColor() {
     let randomIndex = GameUtils.getRandomInt(0, Config.colors.length);

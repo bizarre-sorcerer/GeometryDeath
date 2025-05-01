@@ -23,7 +23,7 @@ function initGame(event) {
 
     if (usernameInput.value != "" && usernameInput.value != null) {
       setCookie("username", usernameInput.value, 365);
-      handleAuth(usernameInput.value);
+      // handleAuth(usernameInput.value);
 
       body.style.display = "block";
       canvas.style.display = "block";
