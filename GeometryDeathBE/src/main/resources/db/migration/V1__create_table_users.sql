@@ -5,12 +5,12 @@ create table if not exists public.users(
     password                    varchar(255),
     verified                    boolean,
     record                      bigint
-);
+    );
 
 create table if not exists public.roles(
     id                          bigint primary key,
     role                        varchar(255)
-);
+    );
 
 create table if not exists public.user_roles (
     user_id bigint not null,
@@ -18,8 +18,8 @@ create table if not exists public.user_roles (
     primary key (user_id, role_id),
     foreign key (user_id) references users(id),
     foreign key (role_id) references roles(id)
-);
+    );
 
 create sequence if not exists id_sequence;
 
-insert into public.roles (id, role) VALUES (0,'GUEST');
+-- insert into public.roles (id, role) VALUES (0,'GUEST');

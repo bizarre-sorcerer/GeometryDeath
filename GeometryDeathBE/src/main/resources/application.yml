@@ -1,25 +1,38 @@
-spring:
+micronaut:
     application:
-        name: GeometryDeathBE
-    datasource:
-        url: SPRING_DATASOURCE_URL
-        username: SPRING_DATASOURCE_USERNAME
-        password: SPRING_DATASOURCE_PASSWORD
-        driver-class-name: org.postgresql.Driver
-    jpa:
-        hibernate:
-            ddl-auto: none
-        show-sql: false
-        properties:
-            hibernate:
-              format_sql: true
-        database: postgresql
-        database-platform: org.hibernate.dialect.PostgreSQLDialect
-    flyway:
+        name: geometryDeathBE
+    security:
         enabled: true
-        locations: classpath:db/migration
-        validate-on-migrate: true
-        baseline-on-migrate: true
-logging:
-    level:
-        org.flywaydb: DEBUG
+        intercept-url-map:
+            -   pattern: /api/auth/**
+                access:
+                    - isAnonymous()
+#        authentication: bearer
+#        token:
+#            jwt:
+#                signatures:
+#                    secret:
+#                        generator:
+#                            secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
+
+datasources:
+    default:
+        url: ${SPRING_DATASOURCE_URL}
+        username: ${SPRING_DATASOURCE_USERNAME}
+        password: ${SPRING_DATASOURCE_PASSWORD}
+        driver-class-name: org.postgresql.Driver
+
+flyway:
+    datasources:
+        default:
+            enabled: true
+
+jpa:
+    hibernate:
+        ddl-auto: none
+    show-sql: false
+    properties:
+        hibernate:
+            format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
