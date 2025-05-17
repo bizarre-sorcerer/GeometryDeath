@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.bizarresorcerer
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [app-name, data, data-jpa, flyway, gradle, h2, http-client-test, java, java-application, jdbc-hikari, junit, logback, lombok, micronaut-aot, micronaut-build, micronaut-http-validation, netty-server, properties, readme, security-annotations, security-jwt, serialization-jackson, shade, static-resources]
