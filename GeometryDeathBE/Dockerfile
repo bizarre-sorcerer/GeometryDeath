@@ -8,7 +8,7 @@ RUN gradle clean build -x test
 
 FROM amazoncorretto:21-alpine
 
-COPY --from=builder /app/build/libs/GeometryDeathBE-0.1.jar app.jar
+COPY --from=builder /app/build/libs/GeometryDeathBE-0.1-all.jar app.jar
 
 EXPOSE 8080
 
