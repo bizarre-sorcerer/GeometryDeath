@@ -2,7 +2,10 @@
 
 import { Game } from "./core/game.js";
 import { checkCookies, setCookie } from "./utils/cookies-utils.js";
-import { checkIfMobile, preventTabResizes } from "./utils/platform-utils.js";
+import {
+  checkIfMobile,
+  preventTabResizesAndDevTools,
+} from "./utils/platform-utils.js";
 import { handleAuth } from "./utils/auth-utils.js";
 
 const usernameInput = document.querySelector("#input");
@@ -11,7 +14,7 @@ let game = null;
 
 checkCookies(usernameInput);
 checkIfMobile();
-preventTabResizes();
+preventTabResizesAndDevTools();
 
 function initGame(event) {
   const body = document.querySelector("body");
