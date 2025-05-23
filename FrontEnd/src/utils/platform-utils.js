@@ -13,8 +13,12 @@ export function checkIfMobile() {
   }
 }
 
-export function preventTabResizes() {
+export function preventTabResizesAndDevTools() {
   let keycodes = [17, 189, 187, 107, 109];
+
+  if (!import.meta.env.DEV) {
+    keycodes.push(123);
+  }
 
   let target = window.opera ? document.body : document;
   target.addEventListener(
@@ -27,4 +31,11 @@ export function preventTabResizes() {
     },
     !window.opera
   );
+
+  target.addEventListener("contextmenu", (event) => {
+    if (!import.meta.env.DEV) {
+      event.preventDefault();
+      return false;
+    }
+  });
 }
