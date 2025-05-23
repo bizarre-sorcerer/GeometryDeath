@@ -17,15 +17,10 @@ micronaut:
 
 datasources:
     default:
-        url: ${SPRING_DATASOURCE_URL}
-        username: ${SPRING_DATASOURCE_USERNAME}
-        password: ${SPRING_DATASOURCE_PASSWORD}
+        url: ${datasources.default.url}
+        username: ${datasources.default.username}
+        password: ${datasources.default.password}
         driver-class-name: org.postgresql.Driver
-
-flyway:
-    datasources:
-        default:
-            enabled: true
 
 jpa:
     hibernate:
@@ -36,3 +31,7 @@ jpa:
             format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logger:
+    levels:
+        root: DEBUG
