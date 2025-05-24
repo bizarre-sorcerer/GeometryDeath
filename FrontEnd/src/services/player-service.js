@@ -11,6 +11,10 @@ export class PlayerService {
     this.gameService = gameService;
   }
 
+  setRendererService(rendererService) {
+    this.rendererService = rendererService;
+  }
+
   changeStateToProtected(player) {
     if (player instanceof Player) {
       player.state = PlayerStates.PROTECTED;
@@ -21,6 +25,7 @@ export class PlayerService {
         player.state = PlayerStates.DEFAULT;
         this.gameService.player.fillColor = Config.defaultFillColor;
         this.gameService.createShieldWithDelay();
+        clearInterval(this.gameService.shieldTimerInterval);
       }, Config.shieldDuration);
     }
   }

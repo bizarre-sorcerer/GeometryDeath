@@ -21,6 +21,7 @@ export class GameService {
     this.rendererService.setGameService(this);
 
     this.playerService.setGameService(this);
+    this.playerService.setRendererService(this.rendererService);
   }
 
   init() {
@@ -38,8 +39,11 @@ export class GameService {
     this.lastTimeBallsAdded;
     this.loseMessage;
 
+    this.shieldTimeLeft = 3;
+
     this.lifeObjectsInterval;
     this.physicsAndPointsInterval;
+    this.shieldTimerInterval;
   }
 
   setUpCanvas(canvas, ctx) {
@@ -183,7 +187,19 @@ export class GameService {
         this.allGameObjects.push(shieldObject);
         this.shieldAvailable = true;
       }
-    }, Config.shieldAppereanceDelay);
+      // }, Config.shieldAppereanceDelay);
+    }, 2000);
+  }
+
+  handleShieldTimer() {
+    let self = this;
+    this.shieldTimerInterval = setInterval(function () {
+      self.shieldTimeLeft -= 1;
+    }, 1000);
+
+    setTimeout(() => {
+      this.shieldTimeLeft = 3;
+    }, 4000);
   }
 
   removeGameObject(gameObject, gameObjectsArray) {

@@ -97,6 +97,7 @@ export class PhysicsService {
   handleShieldObjectCollison(player, shieldObject) {
     this.gameService.shieldAvailable = false;
 
+    this.gameService.handleShieldTimer();
     this.playerService.changeStateToProtected(player);
 
     this.gameService.removeGameObject(
