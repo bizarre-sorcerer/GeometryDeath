@@ -1,4 +1,4 @@
-# Geometry Death
+# Geometry Death 2
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
@@ -51,7 +51,6 @@ You start with **5 lives**. Move your mouse to control your bubble and avoid col
   Stay alive, dodge smart, collect power-ups, and **score as many points as possible**!
 
 ---
-
 
 ---
 
