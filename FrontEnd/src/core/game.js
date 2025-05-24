@@ -12,7 +12,7 @@ export class Game {
   }
 
   init() {
-    this.playerService = new PlayerService(this.gameService);
+    this.playerService = new PlayerService();
     this.rendererService = new RendererService(this.ctx, this.gameService);
     this.physicsService = new PhysicsService();
 

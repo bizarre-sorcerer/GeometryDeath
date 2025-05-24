@@ -1,5 +1,6 @@
 import { Ball } from "../entities/ball.js";
 import { LifeObject } from "../entities/life-object.js";
+import { PlayerStates } from "../entities/player-states.js";
 import { Player } from "../entities/player.js";
 import { SpecialEffectsObject } from "../entities/special-effects-object.js";
 import { Config } from "../utils/config.js";
@@ -80,6 +81,10 @@ export class RendererService {
       this.gameService.lifeIndicator,
       this.gameService.player.amountOfLives
     );
+
+    if (this.gameService.player.state == PlayerStates.PROTECTED) {
+      this.renderShieldTimer(this.gameService.shieldTimeLeft);
+    }
   }
 
   renderLoseMessage(message) {
@@ -88,6 +93,12 @@ export class RendererService {
       window.innerWidth / 2 - 19,
       window.innerHeight / 2
     );
+    this.ctx.textBaseline = "middle";
+    this.ctx.textAlign = "center";
+  }
+
+  renderShieldTimer(timeLeft) {
+    this.ctx.strokeText(timeLeft, window.innerWidth / 2 - 19, 120);
     this.ctx.textBaseline = "middle";
     this.ctx.textAlign = "center";
   }
