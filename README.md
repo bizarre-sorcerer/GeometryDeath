@@ -7,30 +7,30 @@
 [![Spring Boot](https://img.shields.io/badge/spring--boot-3+-green.svg)](https://spring.io/projects/spring-boot)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-A 2D Web Browser game where you control a bubble with your mouse and try to survive as long as possible without getting popped by other bubbles. The longer you survive, the more points you earn!
+2D Web Browser game: control a bubble with mouse, survive as long as possible by avoiding other bubbles, earn points for longer survival.
 
 ---
 
 ## 🚀 Gameplay
 
-You start with **5 lives**. Move your mouse to control your bubble and avoid colliding with other hostile bubbles.
+**5 lives**. Control the bubble with the mouse, avoiding collisions with enemies.
 
 ---
 
 - 💥 **Collision Damage**  
-  Avoid enemy bubbles! Every collision costs **1 life**.  
+  Avoid enemy bubbles! Each collision — minus **1 life**.  
   ![Avoid bubbles](images/avoid.gif)
 
 ---
 
 - ❤️ **Health Pickup**  
-  Regain **+1 life** by collecting a **heart** power-up.  
+  Regain **+1 life** by collecting a heart power-up. It appears **only** if you're missing one or more lives.
   ![Heart pickup](images/heart.gif)
 
 ---
 
 - 🛡️ **Shield Power-Up**  
-  Every **20 seconds**, a shield spawns. Collect it to become **invincible** for **3 seconds** and pop enemy bubbles instead!  
+ Every **20 seconds**, a shield spawns. Collect to be invincible for **3 seconds** and pop enemy bubbles.  
   ![Shield active](images/shield.gif)
 
 ---
@@ -42,13 +42,13 @@ You start with **5 lives**. Move your mouse to control your bubble and avoid col
 ---
 
 - 🧮 **Scoring System**  
-  Your score increases the longer you stay alive. Survive and aim for a high score!  
+  Score increases with survival time. Aim for a high score.  
   ![Scoring](images/score.gif)
 
 ---
 
 - 🧠 **Your Objective**  
-  Stay alive, dodge smart, collect power-ups, and **score as many points as possible**!
+  Survive, dodge, collect power-ups, and **score points**.
 
 ---
 
@@ -65,8 +65,8 @@ You start with **5 lives**. Move your mouse to control your bubble and avoid col
 
 ## 📦 Installation
 
-### Prerequisites
+### System requirements
 
-- Docker & Docker Compose installed
+- Install Docker and docker-compose
 
 ### Run with Dockers
