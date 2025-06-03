@@ -1,4 +1,3 @@
-import { PlayerService } from "../services/player-service.js";
 import { RendererService } from "../services/renderer-service.js";
 import { PhysicsService } from "../services/physics-service.js";
 import { GameService } from "../services/game-service.js";
@@ -12,12 +11,10 @@ export class Game {
   }
 
   init() {
-    this.playerService = new PlayerService();
     this.rendererService = new RendererService(this.ctx, this.gameService);
     this.physicsService = new PhysicsService();
 
     this.gameService = new GameService(
-      this.playerService,
       this.physicsService,
       this.rendererService
     );

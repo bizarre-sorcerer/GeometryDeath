@@ -14,8 +14,6 @@ export async function createGuestAccount(username) {
       }
     );
 
-    console.log(response);
-
     if (!response.ok) {
       throw new Error("Failed to create guest account");
     }
