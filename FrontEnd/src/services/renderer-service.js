@@ -17,14 +17,10 @@ export class RendererService {
   drawGameObject(gameObject) {
     this.ctx.beginPath();
     this.ctx.strokeStyle = gameObject.strokeColor;
-    this.ctx.fillStyle = gameObject.fillColor;
+    this.ctx.fillStyle = Config.defaultFillColor;
     this.ctx.lineWidth = gameObject.thickness;
 
-    if (
-      gameObject instanceof Ball ||
-      gameObject instanceof Player ||
-      gameObject instanceof LifeObject
-    ) {
+    if (gameObject instanceof Ball) {
       this.ctx.arc(
         gameObject.x,
         gameObject.y,
@@ -34,6 +30,7 @@ export class RendererService {
         false
       );
     }
+
     this.ctx.stroke();
     this.ctx.fill();
   }
@@ -68,10 +65,28 @@ export class RendererService {
     );
   }
 
+  renderPlayer(player) {
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = player.strokeColor;
+    this.ctx.fillStyle = player.fillColor;
+    this.ctx.lineWidth = player.thickness;
+
+    this.ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
+
+    this.ctx.stroke();
+    this.ctx.fill();
+
+    if (this.gameService.player.state == PlayerStates.PROTECTED) {
+      this.renderShieldTimer(player);
+    }
+  }
+
   renderFrame(gameObjects) {
     for (let gameObject of gameObjects) {
       if (gameObject instanceof SpecialEffectsObject) {
         this.renderSpecialEffectsObject(gameObject);
+      } else if (gameObject instanceof Player) {
+        this.renderPlayer(gameObject);
       } else {
         this.drawGameObject(gameObject);
       }
@@ -81,10 +96,6 @@ export class RendererService {
       this.gameService.lifeIndicator,
       this.gameService.player.amountOfLives
     );
-
-    if (this.gameService.player.state == PlayerStates.PROTECTED) {
-      this.renderShieldTimer(this.gameService.shieldTimeLeft);
-    }
   }
 
   renderLoseMessage(message) {
@@ -97,10 +108,19 @@ export class RendererService {
     this.ctx.textAlign = "center";
   }
 
-  renderShieldTimer(timeLeft) {
-    this.ctx.strokeText(timeLeft, window.innerWidth / 2 - 19, 120);
-    this.ctx.textBaseline = "middle";
-    this.ctx.textAlign = "center";
+  renderShieldTimer(player) {
+    const { x, y, radius, shieldTimeLeft, fillColor } = player;
+
+    this.ctx.beginPath();
+    this.ctx.lineWidth = 5;
+    this.ctx.strokeStyle = fillColor;
+    this.ctx.arc(x, y, radius + 7, 0, shieldTimeLeft, false);
+    this.ctx.stroke();
+
+    this.ctx.beginPath();
+    this.ctx.fillStyle = "rgba(53, 155, 233, 0.3)";
+    this.ctx.arc(x, y, radius + 7, 0, Math.PI * 2);
+    this.ctx.fill();
   }
 
   clearScreen() {

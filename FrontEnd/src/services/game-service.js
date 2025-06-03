@@ -7,9 +7,8 @@ import { LifeObject } from "../entities/life-object.js";
 import { ShieldObject } from "../entities/shield-object.js";
 
 export class GameService {
-  constructor(playerService, physicsService, rendererService) {
+  constructor(physicsService, rendererService) {
     this.physicsService = physicsService;
-    this.playerService = playerService;
     this.rendererService = rendererService;
     this.init();
   }
@@ -19,9 +18,6 @@ export class GameService {
     this.physicsService.setPlayerService(this.playerService);
 
     this.rendererService.setGameService(this);
-
-    this.playerService.setGameService(this);
-    this.playerService.setRendererService(this.rendererService);
   }
 
   init() {
@@ -39,11 +35,8 @@ export class GameService {
     this.lastTimeBallsAdded;
     this.loseMessage;
 
-    this.shieldTimeLeft = 3;
-
     this.lifeObjectsInterval;
     this.physicsAndPointsInterval;
-    this.shieldTimerInterval;
   }
 
   setUpCanvas(canvas, ctx) {
@@ -101,6 +94,7 @@ export class GameService {
       amountOfLives: Config.defaultAmountOfLives,
       state: PlayerStates.DEFAULT,
     });
+    this.player.setGameService(this);
     this.allGameObjects.push(this.player);
 
     let self = this;
@@ -189,17 +183,6 @@ export class GameService {
       }
       // }, Config.shieldAppereanceDelay);
     }, 2000);
-  }
-
-  handleShieldTimer() {
-    let self = this;
-    this.shieldTimerInterval = setInterval(function () {
-      self.shieldTimeLeft -= 1;
-    }, 1000);
-
-    setTimeout(() => {
-      this.shieldTimeLeft = 3;
-    }, 4000);
   }
 
   removeGameObject(gameObject, gameObjectsArray) {
