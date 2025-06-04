@@ -85,3 +85,13 @@ canvas {
   font-size: 24px;
   color: rgba(255, 255, 255, 0.8) !important;
 }
+
+.tutorial-container {
+  width: 50vw;
+  height: 60vh;
+  position: absolute;
+  top: 15%;
+  background-color: rgb(27, 22, 22);
+  box-shadow: 0 0 15px 5px rgba(204, 16, 16, 0.521);
+  border-radius: 12px;
+}

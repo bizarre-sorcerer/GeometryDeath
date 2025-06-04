@@ -1,20 +1,18 @@
 "use strict";
 
 import { Game } from "./core/game.js";
-import { checkCookies, setCookie } from "./utils/cookies-utils.js";
-import {
-  checkIfMobile,
-  preventTabResizesAndDevTools,
-} from "./utils/platform-utils.js";
-import { handleAuth } from "./utils/auth-utils.js";
+import { CookiesHandler } from "./utils/cookies-handler.js";
+import { PlatformUtils } from "./utils/platform-utils.js";
 
 const usernameInput = document.querySelector("#input");
 usernameInput.addEventListener("keydown", initGame);
 let game = null;
 
-checkCookies(usernameInput);
-checkIfMobile();
-preventTabResizesAndDevTools();
+let cookieHandler = new CookiesHandler();
+
+cookieHandler.checkCookies(usernameInput);
+PlatformUtils.checkIfMobile();
+PlatformUtils.preventTabResizesAndDevTools();
 
 function initGame(event) {
   const body = document.querySelector("body");
@@ -25,8 +23,7 @@ function initGame(event) {
     event.preventDefault();
 
     if (usernameInput.value != "" && usernameInput.value != null) {
-      setCookie("username", usernameInput.value, 365);
-      // handleAuth(usernameInput.value);
+      cookieHandler.setCookie("username", usernameInput.value, 365);
 
       body.style.display = "block";
       canvas.style.display = "block";

@@ -1,0 +1,43 @@
+export class CookiesHandler {
+  setCookie(cookieName, cookieValue, expirationDays) {
+    const d = new Date();
+    d.setTime(d.getTime() + expirationDays * 24 * 60 * 60 * 1000);
+    let expires = "expires=" + d.toUTCString();
+    document.cookie =
+      cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+  }
+
+  getCookie(cookieName) {
+    let name = cookieName + "=";
+    let ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  checkCookies(input) {
+    this.checkUsernameCookie(input);
+    this.showTutorialOnce();
+  }
+
+  checkUsernameCookie() {
+    let user = this.getCookie("username");
+    if (user != "") {
+      input.value = user;
+    }
+  }
+
+  showTutorialOnce() {
+    let hasSeenTutorial = this.getCookie("hasSeenTutorial");
+    if (hasSeenTutorial == "") {
+      console.log(document.querySelector("#tutorial-container"));
+    }
+  }
+}
