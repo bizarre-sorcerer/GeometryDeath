@@ -1,20 +1,16 @@
 "use strict";
 
 import { Game } from "./core/game.js";
-import { checkCookies, setCookie } from "./utils/cookies-utils.js";
-import {
-  checkIfMobile,
-  preventTabResizesAndDevTools,
-} from "./utils/platform-utils.js";
-import { handleAuth } from "./utils/auth-utils.js";
+import { CookiesHandler } from "./utils/cookies-handler.js";
+import { PlatformUtils } from "./utils/platform-utils.js";
 
 const usernameInput = document.querySelector("#input");
 usernameInput.addEventListener("keydown", initGame);
 let game = null;
 
-checkCookies(usernameInput);
-checkIfMobile();
-preventTabResizesAndDevTools();
+CookiesHandler.checkUsernameCookie(usernameInput);
+PlatformUtils.checkIfMobile();
+PlatformUtils.preventTabResizesAndDevTools();
 
 function initGame(event) {
   const body = document.querySelector("body");
@@ -25,17 +21,45 @@ function initGame(event) {
     event.preventDefault();
 
     if (usernameInput.value != "" && usernameInput.value != null) {
-      setCookie("username", usernameInput.value, 365);
-      // handleAuth(usernameInput.value);
+      CookiesHandler.setCookie("username", usernameInput.value, 365);
 
       body.style.display = "block";
       canvas.style.display = "block";
       introContainer.style.display = "none";
 
-      game = new Game(canvas);
-      game.startGame();
-
-      canvas.addEventListener("click", game.restartGame.bind(game));
+      showTutorialOnce();
     }
+  }
+}
+
+function startGame() {
+  game = new Game(canvas);
+  game.startGame();
+
+  canvas.addEventListener("click", game.restartGame.bind(game));
+}
+
+function showTutorialOnce() {
+  console.log("showTutorialOnce");
+
+  if (CookiesHandler.getCookie("hasSeenTutorial") == false) {
+    CookiesHandler.setCookie("hasSeenTutorial", true, 7);
+    let tutorialContainer = document.querySelector("#tutorial-container");
+    let skipBtn = document.querySelector("#skip-btn");
+    let nextBtn = document.querySelector("#next-btn");
+
+    tutorialContainer.style.display = "block";
+
+    skipBtn.addEventListener("click", () => {
+      tutorialContainer.style.display = "none";
+      startGame();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      tutorialContainer.style.display = "none";
+      startGame();
+    });
+  } else {
+    startGame();
   }
 }
