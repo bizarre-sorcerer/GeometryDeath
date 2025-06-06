@@ -75,7 +75,7 @@ export class GameService {
   }
 
   createNewBallsPeriodically() {
-    if (performance.now() - this.lastTimeBallsAdded >= 2000) {
+    if (performance.now() - this.lastTimeBallsAdded >= 5000) {
       if (this.allGameObjects.length < Config.maxBalls) {
         this.createMoreBalls();
       }
@@ -165,7 +165,7 @@ export class GameService {
         self.allGameObjects.push(lifeObject);
         self.lifeObjects.push(lifeObject);
       }
-    }, 10000);
+    }, 3000);
   }
 
   createShieldWithDelay() {
@@ -181,8 +181,7 @@ export class GameService {
         this.allGameObjects.push(shieldObject);
         this.shieldAvailable = true;
       }
-      // }, Config.shieldAppereanceDelay);
-    }, 2000);
+    }, Config.shieldAppereanceDelay);
   }
 
   removeGameObject(gameObject, gameObjectsArray) {
