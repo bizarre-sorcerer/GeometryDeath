@@ -65,6 +65,14 @@ input:focus {
   border-radius: 5px;
 }
 
+.validationError {
+  border-color: red;
+}
+
+.validationError:focus {
+  border-color: red !important;
+}
+
 canvas {
   display: none;
 }
@@ -124,6 +132,5 @@ canvas {
 
 .tutorial-gif {
   width: 400px;
-  /* box-shadow: 0 0 15px 5px rgba(204, 16, 16, 0.336); */
   border-radius: 12px;
 }

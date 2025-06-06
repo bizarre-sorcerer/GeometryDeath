@@ -6,6 +6,7 @@ import { PlatformUtils } from "./utils/platform-utils.js";
 
 const usernameInput = document.querySelector("#input");
 usernameInput.addEventListener("keydown", initGame);
+usernameInput.addEventListener("input", isInputValid);
 let game = null;
 
 CookiesHandler.checkUsernameCookie(usernameInput);
@@ -19,8 +20,7 @@ function initGame(event) {
 
   if (event.key === "Enter") {
     event.preventDefault();
-
-    if (usernameInput.value != "" && usernameInput.value != null) {
+    if (isInputValid()) {
       CookiesHandler.setCookie("username", usernameInput.value, 365);
 
       body.style.display = "block";
@@ -32,6 +32,16 @@ function initGame(event) {
   }
 }
 
+function isInputValid() {
+  if (usernameInput.value == "" || usernameInput.value == null) {
+    usernameInput.classList.add("validationError");
+    return false;
+  } else {
+    usernameInput.classList.remove("validationError");
+    return true;
+  }
+}
+
 function startGame() {
   game = new Game(canvas);
   game.startGame();
@@ -40,8 +50,6 @@ function startGame() {
 }
 
 function showTutorialOnce() {
-  console.log("showTutorialOnce");
-
   if (CookiesHandler.getCookie("hasSeenTutorial") == false) {
     CookiesHandler.setCookie("hasSeenTutorial", true, 7);
     let tutorialContainer = document.querySelector("#tutorial-container");
