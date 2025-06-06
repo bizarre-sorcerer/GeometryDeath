@@ -1,5 +1,5 @@
 export class CookiesHandler {
-  setCookie(cookieName, cookieValue, expirationDays) {
+  static setCookie(cookieName, cookieValue, expirationDays) {
     const d = new Date();
     d.setTime(d.getTime() + expirationDays * 24 * 60 * 60 * 1000);
     let expires = "expires=" + d.toUTCString();
@@ -7,7 +7,7 @@ export class CookiesHandler {
       cookieName + "=" + cookieValue + ";" + expires + ";path=/";
   }
 
-  getCookie(cookieName) {
+  static getCookie(cookieName) {
     let name = cookieName + "=";
     let ca = document.cookie.split(";");
     for (let i = 0; i < ca.length; i++) {
@@ -22,22 +22,10 @@ export class CookiesHandler {
     return "";
   }
 
-  checkCookies(input) {
-    this.checkUsernameCookie(input);
-    this.showTutorialOnce();
-  }
-
-  checkUsernameCookie() {
+  static checkUsernameCookie() {
     let user = this.getCookie("username");
     if (user != "") {
       input.value = user;
-    }
-  }
-
-  showTutorialOnce() {
-    let hasSeenTutorial = this.getCookie("hasSeenTutorial");
-    if (hasSeenTutorial == "") {
-      console.log(document.querySelector("#tutorial-container"));
     }
   }
 }

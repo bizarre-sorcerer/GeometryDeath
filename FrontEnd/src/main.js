@@ -8,9 +8,7 @@ const usernameInput = document.querySelector("#input");
 usernameInput.addEventListener("keydown", initGame);
 let game = null;
 
-let cookieHandler = new CookiesHandler();
-
-cookieHandler.checkCookies(usernameInput);
+CookiesHandler.checkUsernameCookie(usernameInput);
 PlatformUtils.checkIfMobile();
 PlatformUtils.preventTabResizesAndDevTools();
 
@@ -23,16 +21,45 @@ function initGame(event) {
     event.preventDefault();
 
     if (usernameInput.value != "" && usernameInput.value != null) {
-      cookieHandler.setCookie("username", usernameInput.value, 365);
+      CookiesHandler.setCookie("username", usernameInput.value, 365);
 
       body.style.display = "block";
       canvas.style.display = "block";
       introContainer.style.display = "none";
 
-      game = new Game(canvas);
-      game.startGame();
-
-      canvas.addEventListener("click", game.restartGame.bind(game));
+      showTutorialOnce();
     }
+  }
+}
+
+function startGame() {
+  game = new Game(canvas);
+  game.startGame();
+
+  canvas.addEventListener("click", game.restartGame.bind(game));
+}
+
+function showTutorialOnce() {
+  console.log("showTutorialOnce");
+
+  if (CookiesHandler.getCookie("hasSeenTutorial") == false) {
+    CookiesHandler.setCookie("hasSeenTutorial", true, 7);
+    let tutorialContainer = document.querySelector("#tutorial-container");
+    let skipBtn = document.querySelector("#skip-btn");
+    let nextBtn = document.querySelector("#next-btn");
+
+    tutorialContainer.style.display = "block";
+
+    skipBtn.addEventListener("click", () => {
+      tutorialContainer.style.display = "none";
+      startGame();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      tutorialContainer.style.display = "none";
+      startGame();
+    });
+  } else {
+    startGame();
   }
 }

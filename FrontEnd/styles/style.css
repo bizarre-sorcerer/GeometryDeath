@@ -11,6 +11,7 @@ body {
   background-color: rgba(5, 5, 5, 0.9);
   height: 80vh;
   color: rgba(255, 255, 255, 0.85);
+  font-family: "Protest Revolution";
 }
 
 #intro-container {
@@ -26,7 +27,6 @@ h3 {
 }
 
 h1 {
-  font-family: "Protest Revolution";
   font-size: 52px;
   margin-bottom: 0;
 }
@@ -87,11 +87,43 @@ canvas {
 }
 
 .tutorial-container {
-  width: 50vw;
-  height: 60vh;
-  position: absolute;
-  top: 15%;
-  background-color: rgb(27, 22, 22);
-  box-shadow: 0 0 15px 5px rgba(204, 16, 16, 0.521);
+  display: none;
+  margin-top: 100px;
+}
+
+.tutorial-text-elements h1,
+.tutorial-text-elements h2 {
+  text-align: center;
+  margin-bottom: 0;
+  margin-bottom: 0;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.tutorial-container button {
+  width: 140px;
+  height: 40px;
+  font-size: 20px;
+  border: solid 2px rgba(245, 245, 245, 0.251);
+  border-radius: 8px;
+  color: white;
+}
+
+.skip-btn {
+  background: transparent;
+}
+
+.next-btn {
+  background-color: rgba(221, 47, 47, 0.89);
+}
+
+.tutorial-gif {
+  width: 400px;
+  /* box-shadow: 0 0 15px 5px rgba(204, 16, 16, 0.336); */
   border-radius: 12px;
 }
