@@ -75,7 +75,7 @@ export class GameService {
   }
 
   createNewBallsPeriodically() {
-    if (performance.now() - this.lastTimeBallsAdded >= 5000) {
+    if (performance.now() - this.lastTimeBallsAdded >= 3000) {
       if (this.allGameObjects.length < Config.maxBalls) {
         this.createMoreBalls();
       }
