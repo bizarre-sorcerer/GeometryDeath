@@ -5,8 +5,8 @@ export class Config {
   static dy = 4;
   static thickness = 2;
   static speed = 6;
-  static ballsAmount = 2;
-  static maxBalls = this.calculateBallsMaxAmount(0.07);
+  static ballsAmount = 1;
+  static maxBalls = this.calculateBallsMaxAmount(0.06);
 
   static font = "50px Arial";
   static colors = [
