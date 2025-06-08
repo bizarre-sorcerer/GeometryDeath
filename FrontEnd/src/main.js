@@ -1,5 +1,6 @@
 "use strict";
 
+import { AuthClient } from "./clients/auth-client.js";
 import { Game } from "./core/game.js";
 import { CookiesHandler } from "./utils/cookies-handler.js";
 import { PlatformUtils } from "./utils/platform-utils.js";
@@ -13,6 +14,8 @@ CookiesHandler.checkUsernameCookie(usernameInput);
 PlatformUtils.checkIfMobile();
 PlatformUtils.preventTabResizesAndDevTools();
 
+let authClient = new AuthClient();
+
 function initGame(event) {
   const body = document.querySelector("body");
   const canvas = document.querySelector("#canvas");
@@ -21,6 +24,7 @@ function initGame(event) {
   if (event.key === "Enter") {
     event.preventDefault();
     if (isInputValid()) {
+      authClient.createGuestAccount(usernameInput.value);
       CookiesHandler.setCookie("username", usernameInput.value, 365);
 
       body.style.display = "block";
