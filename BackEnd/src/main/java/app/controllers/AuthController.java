@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.models.dtos.CreateGuestUserDTO;
+import app.models.dtos.UserDTO;
 import app.services.UserService;
 import io.javalin.Javalin;
 
@@ -15,7 +15,7 @@ public class AuthController {
         app.get("/", context -> context.result("Geometry Death BackEnd"));
 
         app.post("/api/auth/createGuest", ctx ->  {
-            CreateGuestUserDTO dto = ctx.bodyAsClass(CreateGuestUserDTO.class);
+            UserDTO dto = ctx.bodyAsClass(UserDTO.class);
 
             userService.createGuestUser(dto);
         });

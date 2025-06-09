@@ -3,7 +3,7 @@ services:
     postgres:
         image: postgres:15.3
         environment:
-            POSTGRES_DB: "postgredb"
+            POSTGRES_DB: "geometry_death_db"
             POSTGRES_USER: "root_aidar"
             POSTGRES_PASSWORD: "asdf"
         volumes:

@@ -1,8 +1,11 @@
 package app.core;
 
 import app.controllers.AuthController;
+import app.mappers.UsersMapper;
+import app.repositories.UserRepository;
+import app.repositories.impl.UserRepositoryImpl;
 import app.services.UserService;
-import app.services.impl.UserServiceImplementation;
+import app.services.impl.UserServiceImpl;
 import io.javalin.Javalin;
 
 public class BackendApplication {
@@ -12,8 +15,15 @@ public class BackendApplication {
     private static final Injector injector = new Injector();
 
     private static void handleDependencyInjection(){
-        UserServiceImplementation userServiceImpl = new UserServiceImplementation();
-        injector.bindSingleton(UserServiceImplementation.class, userServiceImpl);
+        UserRepositoryImpl userRepositoryImpl = new UserRepositoryImpl();
+        injector.bindSingleton(UserRepositoryImpl.class, userRepositoryImpl);
+        injector.bindSingleton(UserRepository.class, userRepositoryImpl);
+
+        UsersMapper usersMapper = new UsersMapper();
+        injector.bindSingleton(UsersMapper.class, usersMapper);
+
+        UserServiceImpl userServiceImpl = new UserServiceImpl(injector.get(UserRepository.class), injector.get(UsersMapper.class));
+        injector.bindSingleton(UserServiceImpl.class, userServiceImpl);
         injector.bindSingleton(UserService.class, userServiceImpl);
     }
 

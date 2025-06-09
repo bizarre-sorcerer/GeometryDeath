@@ -1,8 +1,8 @@
 package app.services;
 
-import app.models.dtos.CreateGuestUserDTO;
+import app.models.dtos.UserDTO;
 
 public interface UserService {
 
-    void createGuestUser(CreateGuestUserDTO createGuestUserDTO);
+    void createGuestUser(UserDTO userDTO);
 }
