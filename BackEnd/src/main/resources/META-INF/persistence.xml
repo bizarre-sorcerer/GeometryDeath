@@ -5,9 +5,6 @@
         <class>app.models.entities.User</class>
 
         <properties>
-            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/geometry_death_db"/>
-            <property name="jakarta.persistence.jdbc.user" value="root_aidar"/>
             <property name="jakarta.persistence.jdbc.password" value="asdf"/>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
