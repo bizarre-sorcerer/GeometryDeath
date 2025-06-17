@@ -18,3 +18,6 @@ $isLoggedIn = isset($_SESSION['user_id']);
     <h1>Добро пожаловать!</h1>
   </body>
 </html>
+
+<?php include 'header.php'; ?>
+<h1>Добро пожаловать!</h1>
