@@ -1,0 +1,15 @@
+<h2>Категории</h2>
+<ul>
+  <li><a href="category.php?name=Новости">Новости</a></li>
+  <li><a href="category.php?name=Игры">Игры</a></li>
+  <li><a href="category.php?name=Спорт">Спорт</a></li>
+</ul>
+
+
+<?php
+$category = $_GET['name'] ?? 'Неизвестная категория';
+?>
+
+<h1>Категория: <?= htmlspecialchars($category) ?></h1>
+
+<!-- Можно тут вывести статьи по этой категории из БД -->
