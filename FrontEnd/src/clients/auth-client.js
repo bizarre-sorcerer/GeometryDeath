@@ -9,12 +9,12 @@ export class AuthClient {
         },
         body: JSON.stringify({ username: usernameString }),
       });
-      if (!response.ok) {
-        throw new Error("Failed to create guest account");
-      }
+      // if (!response.ok) {
+      //   throw new Error("Failed to create guest account");
+      // }
 
-      const token = await response.text();
-      setCookie("jwt", token);
+      // const token = await response.text();
+      // setCookie("jwt", token);
     } catch (err) {
       console.error("Error:", err);
     }

@@ -10,6 +10,7 @@ usernameInput.addEventListener("keydown", initGame);
 usernameInput.addEventListener("input", isInputValid);
 let game = null;
 
+CookiesHandler.setCookie("hasSeenTutorial", false, 7);
 CookiesHandler.checkUsernameCookie(usernameInput);
 PlatformUtils.checkIfMobile();
 PlatformUtils.preventTabResizesAndDevTools();

@@ -49,6 +49,11 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>11.10.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -74,6 +79,19 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>11.10.0</version>
+                <configuration>
+                    <user>${env.FLYWAY_USER}</user>
+                    <password>${env.FLYWAY_PASSWORD}</password>
+                    <schemas>
+                        <schema>public</schema>
+                    </schemas>
+                </configuration>
             </plugin>
         </plugins>
     </build>

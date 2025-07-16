@@ -5,7 +5,8 @@ export class Config {
   static dy = 4;
   static thickness = 2;
   static speed = 6;
-  static ballsAmount = 1;
+  static ballsAmount = 2;
+  static newBallInterval = 2000
   static maxBalls = this.calculateBallsMaxAmount(0.06);
 
   static font = "50px Arial";

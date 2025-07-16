@@ -1,6 +1,6 @@
 package app.repositories.impl;
 
-import app.models.entities.User;
+import app.models.entity.User;
 import app.repositories.UserRepository;
 import app.utils.JpaUtil;
 import jakarta.persistence.EntityManager;
