@@ -1,5 +1,5 @@
 import { GameObject } from "./game-object.js";
-import { Config } from "../utils/config.js";
+import { Config } from "../configs/game-config.js";
 import { GameUtils } from "../utils/game-utils.js";
 
 export class Ball extends GameObject {

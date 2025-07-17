@@ -1,8 +1,8 @@
-import { Ball } from "../entities/ball.js";
-import { Player } from "../entities/player.js";
-import { LifeObject } from "../entities/life-object.js";
-import { ShieldObject } from "../entities/shield-object.js";
-import { PlayerStates } from "../entities/player-states.js";
+import { Ball } from "../objects/ball.js";
+import { Player } from "../objects/player.js";
+import { LifeObject } from "../objects/life-object.js";
+import { ShieldObject } from "../objects/shield-object.js";
+import { PlayerStates } from "../objects/player-states.js";
 import { PhysicsUtils } from "../utils/physics-utils.js";
 
 export class PhysicsService {

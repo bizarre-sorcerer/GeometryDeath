@@ -1,5 +1,5 @@
-import { SpecialEffectsObject } from "../entities/special-effects-object.js";
-import { Config } from "../utils/config.js";
+import { SpecialEffectsObject } from "../objects/special-effects-object.js";
+import { Config } from "../configs/game-config.js";
 
 export class PhysicsUtils {
   static xDistance = 0;

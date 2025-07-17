@@ -1,6 +1,6 @@
 import { GameObject } from "./game-object.js";
 import { PlayerStates } from "./player-states.js";
-import { Config } from "../utils/config.js";
+import { Config } from "../configs/game-config.js";
 
 export class Player extends GameObject {
   constructor({

@@ -1,9 +1,9 @@
-import { Ball } from "../entities/ball.js";
-import { LifeObject } from "../entities/life-object.js";
-import { PlayerStates } from "../entities/player-states.js";
-import { Player } from "../entities/player.js";
-import { SpecialEffectsObject } from "../entities/special-effects-object.js";
-import { Config } from "../utils/config.js";
+import { Ball } from "../objects/ball.js";
+import { LifeObject } from "../objects/life-object.js";
+import { PlayerStates } from "../objects/player-states.js";
+import { Player } from "../objects/player.js";
+import { SpecialEffectsObject } from "../objects/special-effects-object.js";
+import { Config } from "../configs/game-config.js";
 
 export class RendererService {
   constructor(ctx) {

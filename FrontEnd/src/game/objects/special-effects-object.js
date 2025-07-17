@@ -1,4 +1,4 @@
-import { Config } from "../utils/config.js";
+import { Config } from "../configs/game-config.js";
 import { GameObject } from "./game-object.js";
 
 export class SpecialEffectsObject extends GameObject {

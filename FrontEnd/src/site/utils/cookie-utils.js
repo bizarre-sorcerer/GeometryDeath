@@ -1,4 +1,4 @@
-export class CookiesHandler {
+export class CookieUtils {
   static setCookie(cookieName, cookieValue, expirationDays) {
     const d = new Date();
     d.setTime(d.getTime() + expirationDays * 24 * 60 * 60 * 1000);
@@ -20,12 +20,5 @@ export class CookiesHandler {
       }
     }
     return "";
-  }
-
-  static checkUsernameCookie() {
-    let user = this.getCookie("username");
-    if (user != "") {
-      input.value = user;
-    }
   }
 }

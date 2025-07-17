@@ -1,10 +1,10 @@
-import { Config } from "../utils/config.js";
+import { Config } from "../configs/game-config.js";
 import { GameUtils } from "../utils/game-utils.js";
-import { Player } from "../entities/player.js";
-import { Ball } from "../entities/ball.js";
-import { PlayerStates } from "../entities/player-states.js";
-import { LifeObject } from "../entities/life-object.js";
-import { ShieldObject } from "../entities/shield-object.js";
+import { Player } from "../objects/player.js";
+import { Ball } from "../objects/ball.js";
+import { PlayerStates } from "../objects/player-states.js";
+import { LifeObject } from "../objects/life-object.js";
+import { ShieldObject } from "../objects/shield-object.js";
 
 export class GameService {
   constructor(physicsService, rendererService) {

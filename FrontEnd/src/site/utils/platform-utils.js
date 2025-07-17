@@ -40,4 +40,9 @@ export class PlatformUtils {
       }
     });
   }
+
+  static preventForbiddenThings(){
+    this.checkIfMobile()
+    this.preventTabResizesAndDevTools()
+  }
 }
