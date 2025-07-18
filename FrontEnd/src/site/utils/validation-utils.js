@@ -14,6 +14,6 @@ export class ValidationUtils {
 
     static isSignedIn() {
         let signedIn = CookieUtils.getCookie("signedIn")
-        return signedIn == "false" || signedIn == ''
+        return signedIn == "true"
     }
 }

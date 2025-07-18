@@ -38,6 +38,12 @@ public class User {
     @JoinColumn(name = "rank_id")
     private Rank rank;
 
+    @Column(name="is_anonymous")
+    private Boolean isAnonymous;
+
+    @Column(name="verified")
+    private Boolean verified;
+
     @Column(name="rank")
     private Integer record;
 

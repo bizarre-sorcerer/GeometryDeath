@@ -17,6 +17,8 @@ create table if not exists users (
     password            varchar(255) null,
     role_id             bigint not null references roles(id),
     rank_id             bigint not null references ranks(id),
+    is_anonymous        boolean,
+    verified            boolean,
     record              bigint null,
     created_at          timestamp not null,
     updated_at          timestamp null

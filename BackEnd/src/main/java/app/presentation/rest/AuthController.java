@@ -1,21 +1,28 @@
 package app.presentation.rest;
 
-import app.presentation.dto.request.CreateGuestAccountRequest;
-import app.services.UserService;
+import app.presentation.dto.request.CreateGuestAccountDTO;
+import app.presentation.dto.request.UpgradeGuestAccountDTO;
+import app.services.AuthService;
 import io.javalin.Javalin;
 
 public class AuthController {
-    private UserService userService;
+    private AuthService authService;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
 
     public void registerRoutes(Javalin app){
         app.post("/api/auth/create-guest-account", ctx ->  {
-            CreateGuestAccountRequest dto = ctx.bodyAsClass(CreateGuestAccountRequest.class);
+            CreateGuestAccountDTO dto = ctx.bodyAsClass(CreateGuestAccountDTO.class);
 
-            userService.createGuestUser(dto);
+            authService.createGuestUser(dto);
+        });
+
+        app.patch("/api/auth/upgrade-guest-account", ctx ->  {
+            UpgradeGuestAccountDTO dto = ctx.bodyAsClass(UpgradeGuestAccountDTO.class);
+
+            authService.upgradeGuestUser(dto);
         });
     }
 }

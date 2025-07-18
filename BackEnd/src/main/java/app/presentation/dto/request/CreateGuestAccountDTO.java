@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateGuestAccountRequest {
+public class CreateGuestAccountDTO {
 
     String username;
 }

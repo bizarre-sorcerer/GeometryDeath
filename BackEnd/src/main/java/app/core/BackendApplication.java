@@ -8,8 +8,8 @@ import app.repositories.UserRepository;
 import app.repositories.impl.RankRepositoryImpl;
 import app.repositories.impl.RoleRepositoryImpl;
 import app.repositories.impl.UserRepositoryImpl;
-import app.services.UserService;
-import app.services.impl.UserServiceImpl;
+import app.services.AuthService;
+import app.services.impl.AuthServiceImpl;
 import io.javalin.Javalin;
 import io.javalin.plugin.bundled.CorsPluginConfig;
 
@@ -39,17 +39,17 @@ public class BackendApplication {
         UsersMapper usersMapper = new UsersMapper();
         injector.bindSingleton(UsersMapper.class, usersMapper);
 
-        UserServiceImpl userServiceImpl = new UserServiceImpl(
+        AuthServiceImpl userServiceImpl = new AuthServiceImpl(
                 injector.get(UserRepository.class),
                 injector.get(RoleRepository.class),
                 injector.get(RankRepository.class));
-        injector.bindSingleton(UserServiceImpl.class, userServiceImpl);
-        injector.bindSingleton(UserService.class, userServiceImpl);
+        injector.bindSingleton(AuthServiceImpl.class, userServiceImpl);
+        injector.bindSingleton(AuthService.class, userServiceImpl);
     }
 
     public static void run(){
         handleDependencyInjection();
-        AuthController authController = new AuthController(injector.get(UserService.class));
+        AuthController authController = new AuthController(injector.get(AuthService.class));
 
         app.start(8080);
         authController.registerRoutes(app);
