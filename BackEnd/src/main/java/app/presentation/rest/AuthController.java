@@ -17,14 +17,13 @@ public class AuthController {
         app.post("/api/auth/create-guest-account", ctx ->  {
             CreateGuestAccountDTO dto = ctx.bodyAsClass(CreateGuestAccountDTO.class);
 
-            ResponseEntity result = authService.createGuestUser(dto);
-            
+            ctx.json(authService.createGuestUser(dto));
         });
 
         app.patch("/api/auth/upgrade-guest-account", ctx ->  {
             UpgradeGuestAccountDTO dto = ctx.bodyAsClass(UpgradeGuestAccountDTO.class);
 
-            authService.upgradeGuestUser(dto);
+            ctx.json(authService.upgradeGuestUser(dto));
         });
     }
 }
