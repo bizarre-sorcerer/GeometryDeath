@@ -42,7 +42,8 @@ public class BackendApplication {
         AuthServiceImpl userServiceImpl = new AuthServiceImpl(
                 injector.get(UserRepository.class),
                 injector.get(RoleRepository.class),
-                injector.get(RankRepository.class));
+                injector.get(RankRepository.class),
+                injector.get(UsersMapper.class));
         injector.bindSingleton(AuthServiceImpl.class, userServiceImpl);
         injector.bindSingleton(AuthService.class, userServiceImpl);
     }

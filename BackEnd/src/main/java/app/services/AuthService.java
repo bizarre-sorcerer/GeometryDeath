@@ -2,10 +2,11 @@ package app.services;
 
 import app.presentation.dto.request.CreateGuestAccountDTO;
 import app.presentation.dto.request.UpgradeGuestAccountDTO;
+import app.presentation.dto.response.ResponseEntity;
 
 public interface AuthService {
 
-    void createGuestUser(CreateGuestAccountDTO request);
+    ResponseEntity createGuestUser(CreateGuestAccountDTO request);
 
-    void upgradeGuestUser(UpgradeGuestAccountDTO request);
+    ResponseEntity upgradeGuestUser(UpgradeGuestAccountDTO request);
 }

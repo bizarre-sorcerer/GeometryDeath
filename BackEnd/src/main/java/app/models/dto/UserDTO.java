@@ -2,6 +2,7 @@ package app.models.dto;
 
 import app.models.entity.Rank;
 import app.models.entity.Role;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,8 @@ public class UserDTO {
     private String password;
     private Role role;
     private Rank rank;
+    private Boolean isAnonymous;
+    private Boolean verified;
     private Integer record;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

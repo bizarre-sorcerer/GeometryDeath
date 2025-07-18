@@ -2,6 +2,7 @@ package app.presentation.rest;
 
 import app.presentation.dto.request.CreateGuestAccountDTO;
 import app.presentation.dto.request.UpgradeGuestAccountDTO;
+import app.presentation.dto.response.ResponseEntity;
 import app.services.AuthService;
 import io.javalin.Javalin;
 
@@ -16,7 +17,8 @@ public class AuthController {
         app.post("/api/auth/create-guest-account", ctx ->  {
             CreateGuestAccountDTO dto = ctx.bodyAsClass(CreateGuestAccountDTO.class);
 
-            authService.createGuestUser(dto);
+            ResponseEntity result = authService.createGuestUser(dto);
+            
         });
 
         app.patch("/api/auth/upgrade-guest-account", ctx ->  {
