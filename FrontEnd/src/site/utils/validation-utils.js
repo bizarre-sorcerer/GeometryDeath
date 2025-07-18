@@ -1,3 +1,5 @@
+import { CookieUtils } from './cookie-utils'
+
 export class ValidationUtils {
     
     static isInputValid(input) {
@@ -8,5 +10,10 @@ export class ValidationUtils {
         input.classList.remove("validationError");
         return true;
       }
+    }
+
+    static isSignedIn() {
+        let signedIn = CookieUtils.getCookie("signedIn")
+        return signedIn == "false" || signedIn == ''
     }
 }

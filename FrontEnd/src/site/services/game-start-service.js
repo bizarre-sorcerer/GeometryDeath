@@ -7,21 +7,18 @@ export class GameHandler {
   game = null;
 
   initGame(event, usernameInput) {
-    const body = document.querySelector("body");
-    const canvas = document.querySelector("#canvas");
-    const introContainer = document.querySelector("#intro-container");
-
     if (event.key === "Enter") {
       event.preventDefault();
       if (ValidationUtils.isInputValid(usernameInput)) {
-        let authClient = new AuthClient();
-        authClient.createGuestAccount(usernameInput.value);
-        CookieUtils.setCookie("username", usernameInput.value, 365);
+        if (!ValidationUtils.isSignedIn()){
+          let authClient = new AuthClient();
+          authClient.createGuestAccount(usernameInput.value);
+          CookieUtils.setCookie("username", usernameInput.value, 30);
+        } else {
+          // TO DO: authentication
+        }
 
-        body.style.display = "block";
-        canvas.style.display = "block";
-        introContainer.style.display = "none";
-
+        this.hideHtmlElements()
         this.showTutorialOnce();
       }
     }
@@ -56,5 +53,15 @@ export class GameHandler {
     } else {
       this.startGame();
     }
+  }
+
+  hideHtmlElements() {
+    const body = document.querySelector("body");
+    const canvas = document.querySelector("#canvas");
+    const introContainer = document.querySelector("#intro-container");
+
+    body.style.display = "block";
+    canvas.style.display = "block";
+    introContainer.style.display = "none";
   }
 }
