@@ -21,7 +21,8 @@ create table if not exists users (
     verified            boolean,
     record              bigint null,
     created_at          timestamp not null,
-    updated_at          timestamp null
+    updated_at          timestamp null,
+    is_deleted          boolean default false
 );
 
 create table if not exists leaderboard (
