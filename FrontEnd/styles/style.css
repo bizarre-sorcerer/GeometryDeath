@@ -3,7 +3,7 @@
 body {
   margin: 0;
   overflow: hidden;
-  background-color: rgba(5, 5, 5, 0.9);
+  background-color: #161616;
   color: rgba(255, 255, 255, 0.85);
   font-family: "Protest Revolution";
 }
@@ -11,18 +11,6 @@ body {
 .nav {
   display: flex;
   justify-content: end;
-}
-
-.profile-container{
-  width: fit-content;
-  display: flex;
-  justify-content: end;
-  padding: 20px;
-  opacity: .6;
-}
-
-.profile-container:hover {
-  opacity: 1;
 }
 
 .text-container {
@@ -35,23 +23,26 @@ body {
   border-radius: 8px;
 }
 
+
+.nav-profile-container{
+  width: fit-content;
+  padding: 0 40px;
+  display: flex;
+  justify-content: end;
+  padding: 20px;
+  opacity: .6;
+}
+
+.nav-profile-container:hover {
+  opacity: 1;
+}
+
+
 #profile-icon {
   width: 25px;
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, 0.664);
   border-radius: 2px;
-}
-
-#profile-modal {
-  
-  /* display: none; */
-  position: absolute;
-  font-family: "Roboto";
-  top: 20vh;
-  right: 20vw;
-  width: 800px;
-  height: 500px;
-  background-color: rgb(20, 20, 20);
 }
 
 section {
