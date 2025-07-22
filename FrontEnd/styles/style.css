@@ -1,17 +1,66 @@
 @import url("https://fonts.googleapis.com/css2?family=Protest+Revolution&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
+  margin: 0;
+  overflow: hidden;
+  background-color: rgba(5, 5, 5, 0.9);
+  color: rgba(255, 255, 255, 0.85);
+  font-family: "Protest Revolution";
+}
+
+.nav {
+  display: flex;
+  justify-content: end;
+}
+
+.profile-container{
+  width: fit-content;
+  display: flex;
+  justify-content: end;
+  padding: 20px;
+  opacity: .6;
+}
+
+.profile-container:hover {
+  opacity: 1;
+}
+
+.text-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  background-color: rgba(5, 5, 5, 0.342);
+  border-radius: 8px;
+}
+
+#profile-icon {
+  width: 25px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.664);
+  border-radius: 2px;
+}
+
+#profile-modal {
+  
+  /* display: none; */
+  position: absolute;
+  font-family: "Roboto";
+  top: 20vh;
+  right: 20vw;
+  width: 800px;
+  height: 500px;
+  background-color: rgb(20, 20, 20);
+}
+
+section {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  height: 70vh;
   gap: 30px;
-  margin: 0;
-  overflow: hidden;
-  background-color: rgba(5, 5, 5, 0.9);
-  height: 80vh;
-  color: rgba(255, 255, 255, 0.85);
-  font-family: "Protest Revolution";
 }
 
 #intro-container {

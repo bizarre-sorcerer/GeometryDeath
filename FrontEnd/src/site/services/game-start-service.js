@@ -57,11 +57,13 @@ export class GameHandler {
 
   hideHtmlElements() {
     const body = document.querySelector("body");
+    const header = document.querySelector('#header')
     const canvas = document.querySelector("#canvas");
-    const introContainer = document.querySelector("#intro-container");
+    const introSection = document.querySelector("#intro-section");
 
     body.style.display = "block";
     canvas.style.display = "block";
-    introContainer.style.display = "none";
+    introSection.style.display = "none";
+    header.style.display = "none";
   }
 }

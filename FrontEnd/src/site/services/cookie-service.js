@@ -1,10 +1,17 @@
 import { CookieUtils } from "../utils/cookie-utils";
 
 export class CookieHandler {
-    checkUsernameCookie(input) {
-        let user = CookieUtils.getCookie("username");
-        if (user != "") {
-        input.value = user;
+    
+    fillUsernameFromCookies() {
+        let username = CookieUtils.getCookie("username");
+        if (username != "") {
+            const usernameInput = document.querySelector("#input");
+            let profileText = document.querySelector('#profile-text-container')
+            let usernameText = document.querySelector('#username')
+            
+            profileText.style.display = 'flex'
+            usernameText.innerHTML = username
+            usernameInput.value = username;
         }
     }
 }
