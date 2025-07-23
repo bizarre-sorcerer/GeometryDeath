@@ -7,70 +7,70 @@
 }
 
 #profile-main-container {
-    font-family: "Roboto";
-    width: 80vw;
-    height: 500px;
-    border-radius: 8px;
+  font-family: "Roboto";
+  width: 60vw;
+  height: 500px;
+  border-radius: 8px;
 }
 
 .profile-head {
-    border-radius: 8px;
-    padding: 40px 40px 30px 40px;
-    background-color: #1f1f1f;
+  border-radius: 8px;
+  padding: 40px 40px 30px 40px;
+  background-color: #1f1f1f;
 }
 
 .profile-head-contents {
-    display: flex;
-    gap: 20px;
-    padding-bottom: 10px 
+  display: flex;
+  gap: 20px;
+  padding-bottom: 10px;
 }
 
 .profile-avatar {
-    width: 40px;
-    padding: 10px 10px 0 10px ;
-    border: 1px solid white;
-    border-radius: 8px;
+  width: 40px;
+  padding: 10px 10px 0 10px;
+  border: 1px solid white;
+  border-radius: 8px;
 }
 
 .profile-avatar img {
-    width: 100%
+  width: 100%;
 }
 
 .profile-head-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
 }
 
 #head-panel-username {
-    font-size: 21px;
+  font-size: 21px;
 }
 
 .profile-head-info {
-    display: flex;
-    gap: 40px
+  display: flex;
+  gap: 40px;
 }
 
 .head-info-element {
-    display: flex;
-    gap: 4px;
-    color: #717171
+  display: flex;
+  gap: 4px;
+  color: #717171;
 }
 
 .profile-nav {
-    display: flex;
-    height: 40px;
-    align-items: center;
-    gap: 40px;
+  display: flex;
+  height: 40px;
+  align-items: center;
+  gap: 40px;
 }
 
 .profile-nav a {
-    font-size: 16.8px;
-    color: #717171;
-    text-decoration: none;
+  font-size: 16.8px;
+  color: #717171;
+  text-decoration: none;
 }
 
 .active-link {
-    color: #255e7d !important
+  color: #255e7d !important;
 }

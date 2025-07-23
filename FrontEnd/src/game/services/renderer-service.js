@@ -27,7 +27,7 @@ export class RendererService {
         gameObject.radius,
         0,
         Math.PI * 2,
-        false
+        false,
       );
     }
 
@@ -48,7 +48,7 @@ export class RendererService {
         xPos,
         20,
         Config.lifeObjectSize,
-        Config.lifeObjectSize
+        Config.lifeObjectSize,
       );
       xPos += 40;
     }
@@ -61,7 +61,7 @@ export class RendererService {
       specialEffectsObject.x,
       specialEffectsObject.y,
       specialEffectsObject.width,
-      specialEffectsObject.height
+      specialEffectsObject.height,
     );
   }
 
@@ -94,7 +94,7 @@ export class RendererService {
     this.renderPoints(this.gameService.points);
     this.renderLivesIndicator(
       this.gameService.lifeIndicator,
-      this.gameService.player.amountOfLives
+      this.gameService.player.amountOfLives,
     );
   }
 
@@ -102,7 +102,7 @@ export class RendererService {
     this.ctx.strokeText(
       message,
       window.innerWidth / 2 - 19,
-      window.innerHeight / 2
+      window.innerHeight / 2,
     );
     this.ctx.textBaseline = "middle";
     this.ctx.textAlign = "center";

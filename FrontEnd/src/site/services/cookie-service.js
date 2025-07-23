@@ -1,17 +1,32 @@
 import { CookieUtils } from "../utils/cookie-utils";
 
-export class CookieHandler {
-    
-    fillUsernameFromCookies() {
+export class CookieService {
+    constructor() {
+        this.init();
+    }
+
+    init() {}
+
+    fillHeaderProfileCookies() {
         let username = CookieUtils.getCookie("username");
         if (username != "") {
-            const usernameInput = document.querySelector("#input");
-            let profileText = document.querySelector('#profile-text-container')
-            let usernameText = document.querySelector('#username')
-            
-            profileText.style.display = 'flex'
-            usernameText.innerHTML = username
-            usernameInput.value = username;
+            let profileText = document.querySelector("#profile-text-container");
+            let usernameText = document.querySelector("#username");
+
+            profileText.style.display = "flex";
+            usernameText.innerHTML = username;
+        }
+    }
+
+    fillUsernameInputCookies() {
+        let username = CookieUtils.getCookie("username");
+
+        if (username != "") {
+            try {
+                document.querySelector("#input").value = username;
+            } catch (TypeError) {
+                return;
+            }
         }
     }
 }

@@ -90,7 +90,7 @@ export class PhysicsService {
     this.gameService.removeGameObject(lifeObject, this.gameService.lifeObjects);
     this.gameService.removeGameObject(
       lifeObject,
-      this.gameService.allGameObjects
+      this.gameService.allGameObjects,
     );
   }
 
@@ -102,7 +102,7 @@ export class PhysicsService {
 
     this.gameService.removeGameObject(
       shieldObject,
-      this.gameService.allGameObjects
+      this.gameService.allGameObjects,
     );
   }
 
@@ -130,7 +130,7 @@ export class PhysicsService {
 
       this.gameService.removeGameObject(
         gameObject,
-        this.gameService.allGameObjects
+        this.gameService.allGameObjects,
       );
     }
   }

@@ -16,7 +16,7 @@ export class Game {
 
     this.gameService = new GameService(
       this.physicsService,
-      this.rendererService
+      this.rendererService,
     );
 
     this.gameService.setUpCanvas(this.canvas, this.ctx);

@@ -1,24 +1,18 @@
 "use strict";
 
-import { CookieUtils } from "./site/utils/cookie-utils.js";
 import { PlatformUtils } from "./site/utils/platform-utils.js";
-import { ValidationUtils } from "./site/utils/validation-utils.js";
-import { GameHandler } from "./site/services/game-start-service.js";
-import { CookieHandler } from "./site/services/cookie-service.js";
+import { GameStartService } from "./site/services/game-start-service.js";
+import { CookieService } from "./site/services/cookie-service.js";
 
-let gameHandler = new GameHandler()
-let cookieHandler = new CookieHandler() 
+let gameStartService = new GameStartService();
+let cookieService = new CookieService();
 
-cookieHandler.fillUsernameFromCookies()
+if (window.location.href == "http://localhost:5173/GeometryDeath/") {
+    gameStartService.prepareGameStart();
+    cookieService.fillUsernameInputCookies();
+    cookieService.fillHeaderProfileCookies();
+} else {
+    cookieService.fillHeaderProfileCookies();
+}
 
-const usernameInput = document.querySelector("#input");
-usernameInput.addEventListener("keydown", (event) => {
-  gameHandler.initGame(event, event.target)
-});
-
-usernameInput.addEventListener("input", (event) => {
-  ValidationUtils.isInputValid(event.target);
-});
-
-CookieUtils.setCookie("hasSeenTutorial", false, 7);
-PlatformUtils.preventForbiddenThings()
+PlatformUtils.preventForbiddenThings();

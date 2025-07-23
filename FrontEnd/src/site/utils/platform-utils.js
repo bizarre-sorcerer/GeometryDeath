@@ -30,7 +30,7 @@ export class PlatformUtils {
         }
         return false;
       },
-      !window.opera
+      !window.opera,
     );
 
     target.addEventListener("contextmenu", (event) => {
@@ -41,8 +41,8 @@ export class PlatformUtils {
     });
   }
 
-  static preventForbiddenThings(){
-    this.checkIfMobile()
-    this.preventTabResizesAndDevTools()
+  static preventForbiddenThings() {
+    this.checkIfMobile();
+    this.preventTabResizesAndDevTools();
   }
 }
