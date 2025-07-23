@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
         guestUser.setRole(role.get());
         guestUser.setRank(rank.get());
         guestUser.setIsAnonymous(false);
-        guestUser.setCreatedAt(LocalDateTime.now());
+        guestUser.setCreatedAt(LocalDateTime.now().withNano((LocalDateTime.now().getNano() / 1_000_000) * 1_000_000));
 
         System.out.println("Guest user: " + guestUser);
         userRepository.save(guestUser);
