@@ -8,9 +8,27 @@ body {
   font-family: "Protest Revolution";
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.089);
+}
+
+.logo {
+  padding-left: 40px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 26px;
+  opacity: 0.6;
+}
+
+.logo:hover {
+  opacity: 1;
+}
+
 .nav {
   display: flex;
-  justify-content: end;
 }
 
 .text-container {
@@ -29,7 +47,7 @@ body {
   padding: 0 40px;
   display: flex;
   justify-content: end;
-  padding: 20px;
+  padding: 10px;
   opacity: 0.6;
 }
 

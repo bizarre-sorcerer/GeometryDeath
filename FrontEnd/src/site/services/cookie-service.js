@@ -1,12 +1,6 @@
 import { CookieUtils } from "../utils/cookie-utils";
 
 export class CookieService {
-    constructor() {
-        this.init();
-    }
-
-    init() {}
-
     fillHeaderProfileCookies() {
         let username = CookieUtils.getCookie("username");
         if (username != "") {
