@@ -1,29 +1,34 @@
 import { CookieUtils } from "../utils/cookie-utils";
 
 export class AuthClient {
-  apiUrl = import.meta.env.VITE_API_URL;
+    apiUrl = import.meta.env.VITE_API_URL;
 
-  async createGuestAccount(usernameString) {
-    let options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: usernameString }),
-    };
+    async createGuestAccount(usernameString) {
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username: usernameString }),
+        };
 
-    try {
-      fetch(`${this.apiUrl}/auth/create-guest-account`, options).then(
-        (response) => {
-          if (!response.ok) {
-            throw new Error("Failed to create guest account");
-          } else if (response.ok) {
+        try {
+            const response = await fetch(
+                `${this.apiUrl}/auth/create-guest-account`,
+                options
+            );
+
+            if (!response.ok) {
+                CookieUtils.setCookie("signedIn", "false");
+                throw new Error("Failed to create guest account");
+            }
+
             CookieUtils.setCookie("signedIn", "true");
-          }
-        },
-      );
-    } catch (err) {
-      console.error("Error:", err);
+            return await response.json;
+        } catch (err) {
+            CookieUtils.setCookie("signedIn", "false");
+            console.error("Error:", err);
+            return null;
+        }
     }
-  }
 }

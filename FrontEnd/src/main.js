@@ -2,17 +2,12 @@
 
 import { PlatformUtils } from "./site/utils/platform-utils.js";
 import { GameStartService } from "./site/services/game-start-service.js";
-import { CookieService } from "./site/services/cookie-service.js";
+import * as CookieService from "./site/services/cookie-service.js";
 
 let gameStartService = new GameStartService();
-let cookieService = new CookieService();
+gameStartService.prepareGameStart();
 
-if (window.location.href == "http://localhost:5173/GeometryDeath/") {
-    gameStartService.prepareGameStart();
-    cookieService.fillUsernameInputCookies();
-    cookieService.fillHeaderProfileCookies();
-} else {
-    cookieService.fillHeaderProfileCookies();
-}
+CookieService.fillUsernameInputCookies();
+CookieService.fillHeaderProfileCookies();
 
 PlatformUtils.preventForbiddenThings();

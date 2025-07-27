@@ -21,7 +21,7 @@ export class GameStartService {
         if (event.key === "Enter") {
             event.preventDefault();
             if (ValidationUtils.isInputValid(usernameInput)) {
-                if (!ValidationUtils.isSignedIn()) {
+                if (!CookieUtils.isSignedIn()) {
                     let authClient = new AuthClient();
                     authClient.createGuestAccount(usernameInput.value);
                     CookieUtils.setCookie("username", usernameInput.value, 30);
@@ -30,12 +30,20 @@ export class GameStartService {
                 }
 
                 this.hideHtmlElements();
-                this.showTutorialOnce();
+                this.startGame();
             }
         }
     }
 
     startGame() {
+        if (
+            CookieUtils.getCookie("hasSeenTutorial") == "" ||
+            CookieUtils.getCookie("hasSeenTutorial") == null
+        ) {
+            this.showTutorialOnce();
+            CookieUtils.setCookie("hasSeenTutorial", true, 7);
+        }
+
         this.game = new Game(canvas);
         this.game.startGame();
 
@@ -43,29 +51,19 @@ export class GameStartService {
     }
 
     showTutorialOnce() {
-        if (CookieUtils.getCookie("hasSeenTutorial") == "") {
-            CookieUtils.setCookie("hasSeenTutorial", true, 7);
-            let tutorialContainer = document.querySelector(
-                "#tutorial-container"
-            );
-            let skipBtn = document.querySelector("#skip-btn");
-            let nextBtn = document.querySelector("#next-btn");
+        let tutorialContainer = document.querySelector("#tutorial-container");
+        let skipBtn = document.querySelector("#skip-btn");
+        let nextBtn = document.querySelector("#next-btn");
+        tutorialContainer.style.display = "block";
 
-            tutorialContainer.style.display = "block";
+        skipBtn.addEventListener("click", () => {
+            tutorialContainer.style.display = "none";
+        });
 
-            skipBtn.addEventListener("click", () => {
-                tutorialContainer.style.display = "none";
-                this.startGame();
-            });
-
-            nextBtn.addEventListener("click", () => {
-                // to do more gifs
-                tutorialContainer.style.display = "none";
-                this.startGame();
-            });
-        } else {
-            this.startGame();
-        }
+        nextBtn.addEventListener("click", () => {
+            // to do more gifs
+            tutorialContainer.style.display = "none";
+        });
     }
 
     hideHtmlElements() {

@@ -6,6 +6,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/style.css" />
     <script src="./src/main.js" type="module" defer></script>
+    <script
+      src="./src/site/pages/scripts/header.js"
+      type="module"
+      defer
+    ></script>
   </head>
 
   <body>
@@ -14,15 +19,18 @@
 
       <nav class="nav">
         <a
-          href="./src/site/pages/profile.html"
+          href="./src/site/pages/templates/profile.html"
           class="nav-profile-container"
           id="profile-container"
         >
           <div class="text-container" id="profile-text-container">
             <span id="username">username</span>
             <span id="account-role">GUEST</span>
+            <span id="sign-in" class="sign-in">Sign in</span>
           </div>
-          <img id="profile-icon" src="/assets/icons/profile.svg" alt="" />
+          <div class="img-container">
+            <img id="profile-icon" src="/assets/icons/profile.svg" alt="" />
+          </div>
         </a>
       </nav>
     </header>
@@ -45,22 +53,22 @@
         <h1>Geometry Death</h1>
         <h1 id="mobile-error-message"></h1>
       </div>
+    </section>
 
-      <div class="tutorial-container" id="tutorial-container">
-        <div class="inner-container">
-          <div class="tutorial-text-elements">
-            <h2>Dodge Balls!</h2>
-          </div>
+    <div class="tutorial-container" id="tutorial-container">
+      <div class="inner-container">
+        <div class="tutorial-text-elements">
+          <h2>Dodge Balls!</h2>
+        </div>
 
-          <img src="./assets/gifs/tutorial.gif" alt="" class="tutorial-gif" />
+        <img src="./assets/gifs/tutorial.gif" alt="" class="tutorial-gif" />
 
-          <div class="tutorial-btns">
-            <button class="skip-btn" id="skip-btn">Skip tutorial</button>
-            <button class="next-btn" id="next-btn">Next -></button>
-          </div>
+        <div class="tutorial-btns">
+          <button class="skip-btn" id="skip-btn">Skip tutorial</button>
+          <button class="next-btn" id="next-btn">Next -></button>
         </div>
       </div>
-    </section>
+    </div>
 
     <canvas id="canvas"></canvas>
   </body>
