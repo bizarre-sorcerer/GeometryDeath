@@ -8,9 +8,14 @@
 
 #profile-main-container {
   font-family: "Roboto";
-  width: 60vw;
+  width: 70vw;
   height: 500px;
+}
+
+.profile-element-container {
+  background-color: #1b1b1b;
   border-radius: 8px;
+  padding: 40px 40px 30px 40px;
 }
 
 .profile-head {
@@ -73,4 +78,69 @@
 
 .active-link {
   color: #255e7d !important;
+}
+
+.profile-divide {
+  margin: 20px 0 20px 0;
+}
+
+.uhead {
+  line-height: 32px;
+  padding: 8px 13px;
+  background-color: #252525;
+  border-bottom: 2px solid var(--border-color-4);
+  display: flex;
+  align-items: center;
+}
+
+.uhead h3 {
+  font-size: 20px;
+  text-align: left;
+  margin: 0;
+}
+
+.profile-info-container {
+  border: solid 1px rgba(255, 255, 255, 0.089);
+}
+
+.profile-body {
+  padding-bottom: 0;
+}
+
+.utable {
+  margin: 0;
+  padding: 0 20px;
+}
+
+.utable li {
+  display: flex;
+  list-style: none;
+  font-size: 16px;
+  line-height: 32px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.089);
+}
+
+.utable li:last-child {
+  border-bottom-width: 0;
+}
+
+.utable li div {
+  width: 35%;
+}
+
+hr {
+  border: 1px solid rgba(255, 255, 255, 0.089);
+}
+
+.profile-body-buttons {
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#update-profile-button {
+  width: 160px;
 }

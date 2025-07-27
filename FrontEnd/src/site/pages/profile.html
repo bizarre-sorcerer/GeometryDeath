@@ -28,7 +28,7 @@
 
     <main class="profile-section">
       <div id="profile-main-container">
-        <div class="profile-head">
+        <div class="profile-head profile-element-container">
           <div class="profile-head-contents">
             <div class="profile-avatar">
               <img src="/assets/icons/profile.svg" alt="Resourse not found" />
@@ -61,7 +61,43 @@
           </nav>
         </div>
 
-        <h2>Profile</h2>
+        <hr class="profile-divide" />
+
+        <div class="profile-body profile-element-container">
+          <div class="profile-info-container">
+            <div class="uhead">
+              <h3>Profile</h3>
+            </div>
+            <ul class="info-list utable">
+              <li>
+                <div class="col1">User Name</div>
+                <div class="col2">Айдар Шарипов</div>
+              </li>
+              <li>
+                <div class="col1">E-mail</div>
+                <div class="col2">sharipovaydar200515@gmail.com</div>
+              </li>
+              <li>
+                <div class="col1">About</div>
+                <div class="col2"></div>
+              </li>
+              <li>
+                <div class="col1">Registered</div>
+                <div class="col2 text-capitalize">26 May 2025, 19:05:30</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="profile-body-buttons">
+            <button class="profile-button ghost">SIGN OUT</button>
+            <button
+              class="profile-button call-to-action"
+              id="update-profile-button"
+            >
+              UPDATE PROFILE
+            </button>
+          </div>
+        </div>
       </div>
     </main>
   </body>
