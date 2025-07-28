@@ -1,6 +1,6 @@
 import { Game } from "../../game/core/game.js";
 import { ValidationUtils } from "../utils/validation-utils.js";
-import { AuthClient } from "../api/auth-api.js";
+import { createGuestAccount } from "../api/auth/create-guest-account.js";
 import { CookieUtils } from "../utils/cookie-utils.js";
 
 export class GameStartService {
@@ -13,17 +13,16 @@ export class GameStartService {
         });
 
         usernameInput.addEventListener("input", (event) => {
-            ValidationUtils.isInputValid(event.target);
+            ValidationUtils.isUsernameValid(event.target);
         });
     }
 
     initGame(event, usernameInput) {
         if (event.key === "Enter") {
             event.preventDefault();
-            if (ValidationUtils.isInputValid(usernameInput)) {
+            if (ValidationUtils.isUsernameValid(usernameInput.value)) {
                 if (!CookieUtils.isSignedIn()) {
-                    let authClient = new AuthClient();
-                    authClient.createGuestAccount(usernameInput.value);
+                    createGuestAccount(usernameInput.value);
                     CookieUtils.setCookie("username", usernameInput.value, 30);
                 } else {
                     // TO DO: authentication

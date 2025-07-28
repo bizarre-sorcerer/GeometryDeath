@@ -74,7 +74,7 @@ header a {
   border-left: 1px solid rgba(255, 255, 255, 0.85);
 }
 
-.sign-in {
+.sign-up {
   font-size: 20px;
 }
 
@@ -242,4 +242,35 @@ button {
   color: white;
   border: solid 1px rgba(255, 255, 255, 0.089);
   font-weight: bolder;
+}
+
+button:active {
+  transform: scale(97%);
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.modal-section {
+  width: 100vw;
+  height: 75vh;
+  position: absolute;
+  top: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: #09090927;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #1d1d1d;
+  padding: 80px 60px;
+  border-radius: 8px;
+}
+
+.create-guest {
+  font-size: 16px;
 }

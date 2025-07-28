@@ -1,5 +1,5 @@
 export class ValidationUtils {
-    static isInputValid(input) {
+    static isUsernameValid(username) {
         if (input.value == "" || input.value == null) {
             input.classList.add("validationError");
             return false;
